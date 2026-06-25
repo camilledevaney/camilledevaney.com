@@ -1,0 +1,13 @@
+# Keep the Docker build fast and clean by NOT copying these into the image.
+node_modules
+.next
+out
+build
+.git
+.vercel
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.pem
+.env*

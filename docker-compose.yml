@@ -1,0 +1,19 @@
+# Run the whole website locally with a single command:
+#
+#     docker compose up --build
+#
+# Then open http://localhost:3000 in your browser.
+# Press Ctrl+C to stop it. (Again: this is local only — the live site is on Vercel.)
+
+services:
+  web:
+    build: .
+    container_name: camilledevaney-web
+    ports:
+      - "3000:3000"             # your browser's port 3000  ->  the site inside the container
+    volumes:
+      - .:/app                  # mirror your live code edits into the container
+      - /app/node_modules       # but keep the container's own installed libraries
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true  # reliably detect file changes inside Docker (esp. on macOS)
