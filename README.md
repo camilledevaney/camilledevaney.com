@@ -71,6 +71,34 @@ Vercel quietly handles the hard parts for us:
 
 ---
 
+## 📥 First-time setup & editing the site
+
+**Brand-new Mac?** Start with **`INSTALL.md`** in this folder — it walks you through
+installing the few tools you need (Homebrew, Node.js, Git, Docker, and Claude), one
+copy-paste step at a time.
+
+Once those are installed, download the project onto your computer. Open the Terminal and
+paste:
+
+```bash
+git clone https://github.com/camilledevaney/camilledevaney.com.git
+cd camilledevaney.com
+```
+
+Then open the project with **Claude**, your AI helper, which can edit files and run
+things for you:
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+> 💡 **What that flag means:** it lets Claude make changes and run commands **without
+> stopping to ask your permission every time** — which makes working together much
+> smoother. Only use it inside a project you trust, like this one (it's yours). The
+> first time you run `claude`, it'll ask you to log in — just follow the prompts.
+
+---
+
 ## 🖥️ Running it on your own computer
 
 You only need this to preview changes before they go live. From the project folder:
