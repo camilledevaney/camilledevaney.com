@@ -1,0 +1,114 @@
+% Camille Devaney — résumé
+% Compile with: tectonic resume/resume.tex
+% Source of record for /public/Camille-Devaney-Resume.pdf
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage[top=0.45in,bottom=0.4in,left=0.55in,right=0.55in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontspec}
+
+% Clean, widely-available serif. Falls back to Latin Modern if absent.
+\IfFontExistsTF{Charter}{\setmainfont{Charter}}{}
+
+\definecolor{ink}{HTML}{171717}
+\definecolor{rule}{HTML}{171717}
+\color{ink}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+% Section headings: bold small-caps with a hairline underneath.
+\titleformat{\section}{\large\bfseries\scshape}{}{0em}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{5pt}{2pt}
+
+% A single experience / education entry.
+% #1 organization (+ descriptor)   #2 right-aligned location
+% #3 italic role                    #4 right-aligned dates
+\newcommand{\entry}[4]{%
+  \textbf{#1}\hfill {#2}\\[1pt]
+  \textit{#3}\hfill {#4}\par
+}
+
+% Tight bullet list used inside entries.
+\newlist{points}{itemize}{1}
+\setlist[points]{leftmargin=1.25em, itemsep=1pt, topsep=1pt, parsep=0pt, label=\textbullet}
+
+\begin{document}
+
+%========================= HEADER =========================
+\begin{center}
+  {\LARGE\bfseries CAMILLE DEVANEY}\\[3pt]
+  {\small Institutional Sales \& Trading \, \textbullet\, Growth \& Marketing \, \textbullet\, Builder \& Creative}\\[5pt]
+  {\small
+    (786) 879-9411 \quad\textbar\quad
+    \href{mailto:camilledevaney7@gmail.com}{camilledevaney7@gmail.com} \quad\textbar\quad
+    \href{https://www.linkedin.com/in/camille-devaney-0b51a41a6}{linkedin.com/in/camille-devaney} \quad\textbar\quad
+    \href{https://camilledevaney.com}{camilledevaney.com}
+  }
+\end{center}
+
+%======================= EXPERIENCE ======================
+\vspace{2pt}
+\section{Experience}
+
+\entry{United Capital Markets --- CMBS Broker-Dealer}{Miami, FL}{Sales \& Trading Associate}{Jun 2020 -- Present}
+\begin{points}
+  \item Provide institutional sales coverage to 61 accounts (hedge funds, insurance companies, asset managers); own the daily offering sheet of distressed CMBS/ABS/RMBS fixed-income securities and travel to New York monthly for client meetings.
+  \item Led firm-wide rollout of AI tools (Claude Code), rebuilding a legacy Excel-based system into a dashboard CRM and a modernized customer and trade database that the desk runs on today.
+  \item Passed the SIE, Series 7, and Series 63 exams at age 18; 6+ years of institutional sales and trading experience, gained as the firm scaled from 4 to 12 people.
+  \item Act as a hands-on operator across the desk: produce the firm's 200+ attendee client events at the biannual CREFC industry conferences, train and manage the annual summer intern class, and spot operational bottlenecks and fix them before anyone asks.
+\end{points}
+
+\vspace{2pt}
+\entry{United Real Estate Ventures}{Miami, FL}{Sales \& Marketing --- Luxury Real Estate}{May 2026 -- Present}
+\begin{points}
+  \item Run full-funnel marketing for a \$20M waterfront luxury listing from a standing start: SEO, paid advertising, content creation, email campaigns, and social media --- growing the listing's Instagram to 2,000 followers in under two weeks.
+  \item Lead broker and agent outreach and plan and host broker open-house events to generate qualified demand; produce the listing's video and visual marketing assets and manage brand presentation end to end.
+\end{points}
+
+\vspace{2pt}
+\entry{Gobi Labs LLC \,(Find It \& Gaggl)}{St.\ Louis, MO}{Co-Founder \& Chief Marketing Officer}{Aug 2022 -- Dec 2022}
+\begin{points}
+  \item Co-founded Find It, a QR-enabled smart-sticker product (a low-cost alternative to AirTags); built and pitched go-to-market materials, winning 1st place in the Olin Cup, an annual school-wide business-plan competition.
+  \item As CMO of Gaggl, a social app for college students, led a go-to-market launch to 920+ users; designed promotional creative and recruited a 30-person brand-ambassador street team.
+\end{points}
+
+\vspace{2pt}
+\entry{Blythe Events}{Key Biscayne, FL}{Freelance Event Producer}{2021 -- Present}
+\begin{points}
+  \item Produce corporate events (including 3 for United Capital Markets) and the ``Rhythmic Blue'' music festival series (250+ attendees), managing an 8-band lineup, merchandise design, and social-media promotion.
+\end{points}
+
+\vspace{2pt}
+\entry{Washington University in St.\ Louis}{St.\ Louis, MO}{Head Teaching Assistant --- Managerial Statistics \& Data Analytics}{Sep 2022 -- May 2025}
+\begin{points}
+  \item Managed grading, office hours, and assignment design for Managerial Statistics; previously TA'd Strategic Decision Making with Data Analytics.
+\end{points}
+
+%======================= EDUCATION =======================
+\section{Education}
+\entry{Washington University in St.\ Louis --- Olin Business School}{St.\ Louis, MO}{B.S.\ in Business Administration}{May 2025}
+\vspace{2pt}
+Double Major in Finance \& Marketing, Minor in Environmental Analysis. \quad GPA 3.69/4.00, Dean's List.
+
+%========================= SKILLS ========================
+\section{Skills}
+\textbf{Sales \& Business Development:} Institutional / B2B sales, CMBS/ABS/RMBS analysis, fixed-income trading, account management, client relationships, stakeholder communication, partnerships, pipeline management.\par
+\vspace{2pt}
+\textbf{Growth \& Marketing:} Full-funnel growth, demand generation, go-to-market (GTM), SEO/SEM, paid media, content marketing, social media marketing, email campaigns, brand, event marketing, community building, cross-functional collaboration.\par
+\vspace{2pt}
+\textbf{Systems \& AI:} AI/LLM-assisted development (Claude Code, Claude Cowork), CRM design, database modernization, workflow automation, data dashboards, Bloomberg Terminal, Microsoft Excel / Office.\par
+\vspace{2pt}
+\textbf{Licenses:} SIE, Series 7, Series 63.
+
+%===================== AWARDS & HONORS ===================
+\section{Awards \& Honors}
+\begin{points}
+  \item \textbf{Olin Cup --- 1st Place:} an annual school-wide business-plan competition at Washington University (2023).
+  \item \textbf{Water Polo:} 2nd Place, NCAA D3 National Club Championships; 3$\times$ Collegiate Midwest Division Player of the Week.
+\end{points}
+
+\end{document}
