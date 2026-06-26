@@ -1,95 +1,136 @@
-// Home page: a friendly tutorial for Camille on editing this site with her own
-// Claude session, plus a visual overview of how a change reaches the live site.
-// (Placeholder content for the real site. Edit or replace it anytime.)
+// Home page: Camille Devaney's professional site. Built from her résumé —
+// institutional sales & trading, growth & marketing, builder & creative — and
+// dressed in a little whimsy (the whole screen is water; she's a water polo
+// national finalist, so it fits). Mockup content: edit any of it anytime.
 
+import type { CSSProperties } from "react";
 import RevealRoot from "./RevealRoot";
+import Bubbles from "./Bubbles";
+import Ocean from "./Ocean";
 
-const delay = (ms: number): React.CSSProperties =>
-  ({ "--reveal-delay": `${ms}ms` }) as React.CSSProperties;
+const delay = (ms: number): CSSProperties =>
+  ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-const steps = [
+const EMAIL = "camilledevaney7@gmail.com";
+const PHONE = "(786) 879-9411";
+const LINKEDIN = "https://www.linkedin.com/in/camille-devaney";
+
+const stats = [
+  { value: "61", label: "institutional accounts covered" },
+  { value: "18", label: "age I passed the Series 7 & 63" },
+  { value: "4 → 12", label: "headcount I grew with the firm" },
+  { value: "2,000", label: "IG followers in under two weeks" },
+];
+
+const jobs = [
   {
-    title: "Open the project",
-    body: (
-      <>
-        On your computer, open the <Code>camilledevaney.com</Code> folder in a
-        terminal (or open the folder in the Claude app). Everything that makes the
-        site lives here.
-      </>
-    ),
+    org: "United Capital Markets",
+    role: "Sales & Trading Associate",
+    place: "Miami, FL",
+    dates: "Jun 2020 — Present",
+    points: [
+      "Cover 61 institutional accounts — hedge funds, insurance companies, asset managers — and own the daily offering sheet of distressed CMBS/ABS/RMBS securities.",
+      "Led the firm-wide rollout of AI tooling, rebuilding a legacy Excel system into a dashboard CRM and trade database the desk runs on today.",
+      "Produce the firm's 200+ attendee client events at the biannual CREFC conferences and train the summer intern class.",
+    ],
   },
   {
-    title: "Start the site on your computer",
-    body: (
-      <>
-        Run <Code>npm run dev</Code> and open <Code>http://localhost:3000</Code>.
-        That is this page, a private copy running just for you. Any change you make
-        shows up here instantly, and nobody else can see it yet.
-      </>
-    ),
+    org: "United Real Estate Ventures",
+    role: "Sales & Marketing — Luxury Real Estate",
+    place: "Miami, FL",
+    dates: "May 2026 — Present",
+    points: [
+      "Run full-funnel marketing for a $20M waterfront listing from a standing start — SEO, paid media, content, email, and social.",
+      "Lead broker outreach and host open-house events to generate qualified demand; produce the listing's video and visual assets end to end.",
+    ],
   },
   {
-    title: "Start a Claude session",
-    body: (
-      <>
-        In the same folder, start Claude (run <Code>claude</Code> in the terminal,
-        or point the Claude app at this folder). Claude can now read and edit the
-        site for you.
-      </>
-    ),
+    org: "Gobi Labs — Find It & Gaggl",
+    role: "Co-Founder & Chief Marketing Officer",
+    place: "St. Louis, MO",
+    dates: "Aug 2022 — Dec 2022",
+    points: [
+      "Co-founded Find It, a QR-enabled smart-sticker product, and won 1st place in the Olin Cup business-plan competition.",
+      "As CMO of Gaggl, led a go-to-market launch to 920+ users and recruited a 30-person brand-ambassador team.",
+    ],
   },
   {
-    title: "Just ask, in plain English",
-    body: (
-      <>
-        Describe what you want like you would tell a teammate, no code required. Be
-        specific about the page and the change. Claude makes the edits and you stay
-        in charge.
-      </>
-    ),
-  },
-  {
-    title: "Watch it change live",
-    body: (
-      <>
-        As Claude edits the files, this page refreshes on its own. Not loving it?
-        Say so and ask for a tweak. Nothing is live to the world yet. This is still
-        just your private copy.
-      </>
-    ),
-  },
-  {
-    title: "Publish when you are happy",
-    body: (
-      <>
-        When it looks right, the change goes out with one step. See{" "}
-        <span className="font-medium text-ink">How it reaches the world</span> below
-        for exactly what happens.
-      </>
-    ),
+    org: "Blythe Events",
+    role: "Freelance Event Producer",
+    place: "Key Biscayne, FL",
+    dates: "2021 — Present",
+    points: [
+      "Produce corporate events and the “Rhythmic Blue” music festival series (250+ attendees) — managing the lineup, merch design, and promotion.",
+    ],
   },
 ];
 
-const examplePrompts = [
-  "Change the home page headline to say Camille Devaney, Sales, Marketing, and Creative.",
-  "Add an About page with three short paragraphs about my background.",
-  "Make a Portfolio page that shows the images in the public/art folder as a grid.",
-  "Add a link to my résumé in the top corner of every page.",
+const services = [
+  {
+    title: "Sales & Business Development",
+    body: "Institutional / B2B selling with a trader's instinct for the deal.",
+    skills: [
+      "Institutional sales",
+      "CMBS / ABS / RMBS",
+      "Fixed income",
+      "Account management",
+      "Pipeline",
+    ],
+  },
+  {
+    title: "Growth & Marketing",
+    body: "Full-funnel growth that turns a standing start into real demand.",
+    skills: [
+      "Go-to-market",
+      "SEO / SEM",
+      "Paid media",
+      "Content & social",
+      "Event marketing",
+    ],
+  },
+  {
+    title: "Systems & AI",
+    body: "I build the tools — dashboards, CRMs, and shipped web apps.",
+    skills: [
+      "Claude Code",
+      "Next.js / Vercel",
+      "CRM design",
+      "Automation",
+      "Bloomberg / Excel",
+    ],
+  },
 ];
 
-const flow = [
-  { label: "Your computer", sub: "where you and Claude edit" },
-  { label: "GitHub", sub: "the upstream home of your code", arrow: "git push" },
-  { label: "Vercel", sub: "reads latest and builds", arrow: "auto-detects" },
-  { label: "Live site", sub: "camilledevaney.com, worldwide", arrow: "deploys" },
+const beyond = [
+  {
+    emoji: "🤽‍♀️",
+    title: "Water polo",
+    body: "2nd place at NCAA D3 National Club Championships, and a 3× Midwest Player of the Week. Deep water is home turf.",
+  },
+  {
+    emoji: "🏆",
+    title: "Olin Cup — 1st place",
+    body: "Won WashU's school-wide business-plan competition with Find It.",
+  },
+  {
+    emoji: "🎓",
+    title: "Olin Business School",
+    body: "B.S. — Finance & Marketing, minor in Environmental Analysis. GPA 3.69, Dean's List.",
+  },
+  {
+    emoji: "🎶",
+    title: "Festival producer",
+    body: "Run the “Rhythmic Blue” series — 8-band lineups, 250+ attendees.",
+  },
 ];
 
 export default function Home() {
   return (
     <>
-      <div className="page-aura" aria-hidden />
+      <Ocean />
+      <Bubbles />
       <RevealRoot>
-        <main className="mx-auto w-full max-w-3xl px-6 py-20 text-muted sm:px-8 sm:py-28">
+        <main className="mx-auto w-full max-w-3xl px-6 pb-24 pt-24 text-muted sm:px-8 sm:pt-28">
           {/* Hero */}
           <header>
             <p
@@ -97,216 +138,231 @@ export default function Home() {
               style={delay(0)}
               className="font-mono text-xs uppercase tracking-[0.22em] text-accent"
             >
-              camilledevaney.com
+              Miami, FL · Institutional Sales & Trading
             </p>
             <h1
               data-reveal=""
               style={delay(90)}
-              className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl"
+              className="mt-5 font-display text-5xl font-semibold leading-[1.04] tracking-tight text-ink sm:text-7xl"
             >
-              Hi Camille <span className="wave">👋</span>
+              Camille Devaney
             </h1>
             <p
               data-reveal=""
               style={delay(180)}
+              className="mt-6 max-w-xl font-display text-2xl leading-snug text-ink sm:text-3xl"
+            >
+              I sell bonds, build brands, and ship software{" "}
+              <span className="float-bob">🫧</span> — and I&rsquo;m just as
+              comfortable in deep water.
+            </p>
+            <p
+              data-reveal=""
+              style={delay(260)}
               className="mt-6 max-w-xl text-lg leading-8"
             >
-              This is your website. The best part is that you can change anything on
-              it yourself, just by asking Claude in plain English. Here is the whole
-              workflow, start to finish.
-            </p>
-          </header>
-
-          {/* Steps */}
-          <section className="mt-24">
-            <p
-              data-reveal=""
-              style={delay(0)}
-              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
-            >
-              Editing the site with Claude
-            </p>
-            <ol className="mt-10 ml-[18px] border-l border-line">
-              {steps.map((step, i) => (
-                <li
-                  key={step.title}
-                  data-reveal=""
-                  style={delay(i * 70)}
-                  className="group relative pb-10 pl-9 last:pb-0"
-                >
-                  <span className="absolute -left-[18px] top-0 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-background font-mono text-sm text-accent transition-colors duration-300 group-hover:border-accent">
-                    {i + 1}
-                  </span>
-                  <h3 className="font-display text-xl font-medium text-ink">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 leading-7">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          {/* Example prompts */}
-          <section className="mt-24">
-            <p
-              data-reveal=""
-              style={delay(0)}
-              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
-            >
-              Things you can ask Claude
-            </p>
-            <p data-reveal="" style={delay(70)} className="mt-4 leading-7">
-              Copy any of these into your Claude session, or write your own. The more
-              specific you are, the better the result.
-            </p>
-            <ul className="mt-8">
-              {examplePrompts.map((prompt, i) => (
-                <li
-                  key={prompt}
-                  data-reveal=""
-                  style={delay(i * 70)}
-                  className="group flex items-start gap-3 border-b border-line py-4 transition-all duration-300 hover:pl-2"
-                >
-                  <span className="select-none pt-0.5 font-mono text-accent transition-transform duration-300 group-hover:translate-x-1">
-                    &rsaquo;
-                  </span>
-                  <span className="font-mono text-sm leading-6 text-ink">
-                    {prompt}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* How a change reaches the world */}
-          <section className="mt-24">
-            <p
-              data-reveal=""
-              style={delay(0)}
-              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
-            >
-              How it reaches the world
-            </p>
-            <p
-              data-reveal=""
-              style={delay(70)}
-              className="mt-4 max-w-xl leading-7"
-            >
-              When you are happy with a change, it travels from your computer to the
-              live site automatically. Here is the path it takes.
+              Six years of institutional sales &amp; trading, a full-funnel
+              marketer&rsquo;s playbook, and a builder who&rsquo;d rather fix the
+              broken system than complain about it. Sales, growth, and creative —
+              under one roof.
             </p>
 
             <div
               data-reveal=""
-              style={delay(140)}
-              className="mt-10 flex flex-col gap-2 md:flex-row md:items-center md:gap-0"
+              style={delay(340)}
+              className="mt-9 flex flex-wrap items-center gap-3"
             >
-              {flow.map((node, i) => (
-                <div key={node.label} className="contents">
-                  {i > 0 && (
-                    <div className="flex shrink-0 items-center justify-center gap-2 px-1 py-1 md:flex-col md:gap-1 md:px-3 md:py-0">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-muted">
-                        {node.arrow}
+              <a
+                href="/Camille-Devaney-Resume.pdf"
+                className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-transform hover:-translate-y-0.5"
+              >
+                View résumé
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="rounded-full border border-line px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-[var(--accent-soft)]"
+              >
+                Say hello
+              </a>
+              <a
+                href={LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-ink underline decoration-1 underline-offset-4 transition-all hover:decoration-2"
+              >
+                LinkedIn ↗
+              </a>
+            </div>
+          </header>
+
+          {/* Stats */}
+          <section className="mt-20 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                data-reveal=""
+                style={delay(i * 70)}
+                className="card px-4 py-5 text-center"
+              >
+                <div className="font-display text-3xl font-semibold text-ink">
+                  {s.value}
+                </div>
+                <div className="mt-1.5 text-xs leading-5">{s.label}</div>
+              </div>
+            ))}
+          </section>
+
+          {/* Experience */}
+          <section className="mt-24">
+            <p
+              data-reveal=""
+              style={delay(0)}
+              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
+            >
+              Experience
+            </p>
+            <div className="mt-8 space-y-5">
+              {jobs.map((job, i) => (
+                <article
+                  key={job.org}
+                  data-reveal=""
+                  style={delay(i * 70)}
+                  className="card p-6 sm:p-7"
+                >
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <h3 className="font-display text-xl font-medium text-ink">
+                      {job.org}
+                    </h3>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
+                      {job.dates}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 text-sm font-medium text-accent">
+                    {job.role}{" "}
+                    <span className="text-muted">· {job.place}</span>
+                  </p>
+                  <ul className="mt-4 space-y-2.5">
+                    {job.points.map((pt) => (
+                      <li key={pt} className="flex gap-2.5 leading-7">
+                        <span className="select-none pt-1 text-xs text-accent">
+                          ●
+                        </span>
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* What I do */}
+          <section className="mt-24">
+            <p
+              data-reveal=""
+              style={delay(0)}
+              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
+            >
+              What I do
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              {services.map((svc, i) => (
+                <div
+                  key={svc.title}
+                  data-reveal=""
+                  style={delay(i * 90)}
+                  className="card flex flex-col p-6"
+                >
+                  <h3 className="font-display text-lg font-medium leading-tight text-ink">
+                    {svc.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6">{svc.body}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {svc.skills.map((skill) => (
+                      <span key={skill} className="chip">
+                        {skill}
                       </span>
-                      <span className="arrow-drift rotate-90 text-lg leading-none text-accent md:rotate-0">
-                        &rarr;
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex-1 rounded-xl px-4 py-4 text-center transition-colors duration-300 hover:bg-[var(--accent-soft)]">
-                    <div className="font-display text-base font-medium text-ink">
-                      {node.label}
-                    </div>
-                    <div className="mt-1 font-mono text-[11px] leading-5 text-muted">
-                      {node.sub}
-                    </div>
+                    ))}
                   </div>
                 </div>
               ))}
             </div>
+          </section>
 
-            <div
+          {/* Beyond the desk */}
+          <section className="mt-24">
+            <p
               data-reveal=""
               style={delay(0)}
-              className="mt-12 space-y-5 leading-7"
+              className="font-mono text-xs uppercase tracking-[0.22em] text-muted"
             >
-              <p>
-                <span className="font-medium text-ink">
-                  Pushing syncs your code up to GitHub.
-                </span>{" "}
-                GitHub is the master copy of the site&rsquo;s code, living safely
-                online. Developers call it the upstream repository. When you or
-                Claude run <Code>git push</Code>, your latest local changes are
-                uploaded there, so GitHub always holds the newest version.
-              </p>
-              <p>
-                <span className="font-medium text-ink">
-                  Vercel watches GitHub and deploys automatically.
-                </span>{" "}
-                Vercel is the service that hosts the live site. The moment new code
-                lands on GitHub, Vercel notices, pulls the latest code, rebuilds the
-                whole website fresh, and publishes it worldwide, usually in under a
-                minute. You never upload files by hand.
-              </p>
-              <p className="font-mono text-sm text-muted">
-                In short: <Code>git push</Code>{" "}
-                <span className="text-accent">&rarr;</span> GitHub stores it{" "}
-                <span className="text-accent">&rarr;</span> Vercel builds and ships
-                it <span className="text-accent">&rarr;</span> it is live at
-                camilledevaney.com.
-              </p>
+              Beyond the desk
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {beyond.map((b, i) => (
+                <div
+                  key={b.title}
+                  data-reveal=""
+                  style={delay(i * 70)}
+                  className="card flex items-start gap-4 p-6"
+                >
+                  <span className="text-2xl leading-none">{b.emoji}</span>
+                  <div>
+                    <h3 className="font-display text-lg font-medium text-ink">
+                      {b.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-6">{b.body}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
-          {/* Already live: the résumé */}
+          {/* Contact */}
           <section
             data-reveal=""
             style={delay(0)}
-            className="mt-20 border-l-2 border-accent pl-6"
+            className="mt-24 card p-8 text-center sm:p-10"
           >
-            <h2 className="font-display text-xl font-medium text-ink">
-              Already on your site: your résumé
+            <h2 className="font-display text-3xl font-semibold text-ink sm:text-4xl">
+              Let&rsquo;s make something <span className="wave-hand">👋</span>
             </h2>
-            <p className="mt-2 leading-7">
-              Your résumé is published and served straight from the site. It lives
-              in the <Code>public</Code> folder, so it is reachable at a clean web
-              address,{" "}
+            <p className="mx-auto mt-3 max-w-md leading-7">
+              Hiring, collaborating, or just want to talk shop about markets,
+              growth, or building with AI? I&rsquo;d love to hear from you.
+            </p>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
               <a
-                href="/Camille-Devaney-Resume.pdf"
-                className="font-medium text-accent underline decoration-1 underline-offset-4 transition-all hover:decoration-2"
+                href={`mailto:${EMAIL}`}
+                className="font-medium text-accent underline decoration-1 underline-offset-4 hover:decoration-2"
               >
-                /Camille-Devaney-Resume.pdf
+                {EMAIL}
               </a>
-              . Drop any file in <Code>public</Code> and it works the same way.
-            </p>
-          </section>
-
-          {/* A note from Jayce */}
-          <section data-reveal="" style={delay(0)} className="mt-28 text-center">
-            <h2 className="font-display text-5xl font-semibold leading-tight tracking-tight text-ink sm:text-6xl">
-              I love you, you got this <span className="heartbeat">❤️</span>
-            </h2>
-            <p className="mt-5 font-mono text-xs uppercase tracking-[0.22em] text-muted">
-              Love, Jayce
-            </p>
+              <a
+                href={`tel:${PHONE.replace(/[^\d]/g, "")}`}
+                className="font-medium text-ink hover:text-accent"
+              >
+                {PHONE}
+              </a>
+              <a
+                href={LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-ink hover:text-accent"
+              >
+                LinkedIn ↗
+              </a>
+            </div>
           </section>
 
           {/* Footer */}
-          <footer className="mt-20 border-t border-line pt-6 text-center">
+          <footer className="mt-16 text-center">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted">
-              Generated by claude and Jayce
+              Made in Miami · built with Claude &amp; Next.js 🌊
             </p>
           </footer>
         </main>
       </RevealRoot>
     </>
-  );
-}
-
-function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <code className="rounded-md bg-[var(--accent-soft)] px-1.5 py-0.5 font-mono text-[0.85em] text-ink">
-      {children}
-    </code>
   );
 }
