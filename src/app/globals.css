@@ -1,37 +1,57 @@
 @import "tailwindcss";
 
 /*
-  Warm-editorial design tokens.
-  Paper + ink base with a single ember accent. Light and dark are both
-  warm rather than neutral grey, which keeps the page feeling crafted.
+  Aquatic-editorial design tokens.
+  The whole screen reads as a tank of water with a thin strip of air at the
+  very top, where the surface sloshes. Teal water + a warm coral accent for
+  character. Content rides on frosted "aquarium glass" so it stays readable.
 */
 :root {
-  --paper: #fbf9f5;
-  --ink: #1a1714;
-  --muted: #6f665b;
-  --line: rgba(26, 23, 20, 0.1);
-  --accent: #b65c3f;
-  --accent-soft: rgba(182, 92, 63, 0.12);
+  /* The thin band of air above the waterline. */
+  --air-h: 50px;
 
-  --background: var(--paper);
+  --sky: #e9f7fb;
+  --water-top: #cfeef3;
+  --water-mid: #9bdce7;
+  --water-deep: #57b6cd;
+
+  --ink: #0c2b39;
+  --muted: #3f6c79;
+  --line: rgba(12, 43, 57, 0.12);
+  --accent: #ff6f52;
+  --accent-soft: rgba(255, 111, 82, 0.14);
+
+  --glass: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 10px 34px rgba(8, 40, 55, 0.14);
+
+  --background: var(--sky);
   --foreground: var(--ink);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #100e0c;
-    --ink: #ece7df;
-    --muted: #9a9087;
-    --line: rgba(236, 231, 223, 0.12);
-    --accent: #e59076;
-    --accent-soft: rgba(229, 144, 118, 0.14);
+    --sky: #04141b;
+    --water-top: #0a2c38;
+    --water-mid: #072430;
+    --water-deep: #03161d;
+
+    --ink: #e7f6f9;
+    --muted: #8fb6bf;
+    --line: rgba(231, 246, 249, 0.14);
+    --accent: #ff8064;
+    --accent-soft: rgba(255, 128, 100, 0.16);
+
+    --glass: rgba(9, 38, 50, 0.5);
+    --glass-border: rgba(231, 246, 249, 0.14);
+    --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
   }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-paper: var(--paper);
+  --color-sky: var(--sky);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
@@ -43,32 +63,166 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--sky);
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ---------------------------------------------------------------------------
-   Atmosphere: soft warm light + a whisper of grain. Sits behind everything.
+   The ocean. A fixed full-screen body of water sitting below a thin air strip,
+   with a sloshing surface made of layered, drifting wave tiles. Sits behind
+   all content and ignores clicks.
 --------------------------------------------------------------------------- */
-.page-aura {
+.ocean {
   position: fixed;
   inset: 0;
   z-index: -10;
   pointer-events: none;
   overflow: hidden;
-  background:
-    radial-gradient(58% 48% at 12% 0%, var(--accent-soft), transparent 70%),
-    radial-gradient(46% 42% at 100% 8%, var(--accent-soft), transparent 72%),
-    radial-gradient(72% 55% at 50% 105%, var(--accent-soft), transparent 70%);
 }
 
-.page-aura::after {
+/* The solid body of water, starting just under the waterline. */
+.ocean__water {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--air-h);
+  background: linear-gradient(
+    180deg,
+    var(--water-top) 0%,
+    var(--water-mid) 34%,
+    var(--water-deep) 100%
+  );
+}
+
+/* Faint shafts of light angling down through the water. */
+.ocean__water::before {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  background:
+    linear-gradient(102deg, transparent 38%, rgba(255, 255, 255, 0.22) 42%, transparent 46%),
+    linear-gradient(98deg, transparent 62%, rgba(255, 255, 255, 0.16) 66%, transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* The sloshing surface: stacked wave layers crossing the waterline. */
+.ocean__surface {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 88px;
+  animation: slosh 9s ease-in-out infinite;
+}
+
+.wave {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+}
+
+.wave--back {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='88' viewBox='0 0 180 88' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C30,16 60,16 90,30 S150,44 180,30 L180,88 L0,88 Z' fill='%239bdce7' fill-opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 88px;
+  animation: drift-b 17s linear infinite;
+}
+
+.wave--mid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='88' viewBox='0 0 200 88' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C40,28 60,52 100,40 S160,28 200,40 L200,88 L0,88 Z' fill='%23bce6ee' fill-opacity='0.7'/%3E%3C/svg%3E");
+  background-size: 200px 88px;
+  animation: drift-f 11s linear infinite;
+}
+
+.wave--front {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='88' viewBox='0 0 160 88' preserveAspectRatio='none'%3E%3Cpath d='M0,48 C26,40 54,40 80,48 S134,56 160,48 L160,88 L0,88 Z' fill='%23cfeef3'/%3E%3C/svg%3E");
+  background-size: 160px 88px;
+  animation: drift-b 7s linear infinite;
+}
+
+@keyframes drift-f {
+  from { background-position-x: 0; }
+  to { background-position-x: 200px; }
+}
+@keyframes drift-b {
+  from { background-position-x: 0; }
+  to { background-position-x: -180px; }
+}
+@keyframes slosh {
+  0%, 100% { transform: translateY(0) skewX(0deg); }
+  50% { transform: translateY(4px) skewX(-0.5deg); }
+}
+
+/* ---------------------------------------------------------------------------
+   Bubbles: air bubbles rising up through the water. Decorative, non-interactive.
+--------------------------------------------------------------------------- */
+.bubbles {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -12vh;
+  width: var(--bubble-size, 32px);
+  height: var(--bubble-size, 32px);
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 32% 28%,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.05) 70%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  animation: bubble-rise var(--bubble-duration, 24s) linear infinite;
+  animation-delay: var(--bubble-delay, 0s);
+  will-change: transform, opacity;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--bubble-opacity, 0.5);
+  }
+  88% {
+    opacity: var(--bubble-opacity, 0.5);
+  }
+  100% {
+    transform: translate(var(--bubble-drift, 16px), -118vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Frosted "aquarium glass" panels + small UI bits.
+--------------------------------------------------------------------------- */
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-radius: 1rem;
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* ---------------------------------------------------------------------------
@@ -93,7 +247,7 @@ body {
 /* ---------------------------------------------------------------------------
    Looping micro-animations.
 --------------------------------------------------------------------------- */
-@keyframes wave {
+@keyframes wave-hand {
   0%, 60%, 100% { transform: rotate(0deg); }
   10% { transform: rotate(14deg); }
   20% { transform: rotate(-8deg); }
@@ -101,32 +255,19 @@ body {
   40% { transform: rotate(-4deg); }
   50% { transform: rotate(10deg); }
 }
-.wave {
+.wave-hand {
   display: inline-block;
   transform-origin: 70% 70%;
-  animation: wave 2.8s ease-in-out infinite;
+  animation: wave-hand 2.8s ease-in-out infinite;
 }
 
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  8% { transform: scale(1.18); }
-  16% { transform: scale(1); }
-  24% { transform: scale(1.12); }
-  32% { transform: scale(1); }
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
-.heartbeat {
+.float-bob {
   display: inline-block;
-  transform-origin: center;
-  animation: heartbeat 2.6s ease-in-out infinite;
-}
-
-@keyframes arrow-drift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(4px); }
-}
-.arrow-drift {
-  display: inline-block;
-  animation: arrow-drift 1.8s ease-in-out infinite;
+  animation: float-bob 4s ease-in-out infinite;
 }
 
 /* Respect users who ask for less motion. */
@@ -136,9 +277,13 @@ body {
     transform: none !important;
     transition: none !important;
   }
-  .wave,
-  .heartbeat,
-  .arrow-drift {
+  .wave-hand,
+  .float-bob,
+  .ocean__surface,
+  .wave {
     animation: none !important;
+  }
+  .bubbles {
+    display: none !important;
   }
 }
