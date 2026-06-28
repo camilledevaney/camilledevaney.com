@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local source/working photo folders — originals stay on Camille's machine;
+# the optimized copies the site actually uses live in /public.
+/Art Portfolio Photos/
+/Personal Photos For Website/
+/Reference Photos/

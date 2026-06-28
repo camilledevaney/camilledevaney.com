@@ -1,289 +1,156 @@
 @import "tailwindcss";
 
 /*
-  Aquatic-editorial design tokens.
-  The whole screen reads as a tank of water with a thin strip of air at the
-  very top, where the surface sloshes. Teal water + a warm coral accent for
-  character. Content rides on frosted "aquarium glass" so it stays readable.
+  camilledevaney.com — single-screen (no-scroll) landing page.
+  A tropical-wallpaper background; a rounded profile photo on the left; the name
+  in a large red display serif across the bottom; and a center column of photos
+  that drifts downward like a conveyor belt, looping forever.
 */
-:root {
-  /* The thin band of air above the waterline. */
-  --air-h: 50px;
-
-  --sky: #e9f7fb;
-  --water-top: #cfeef3;
-  --water-mid: #9bdce7;
-  --water-deep: #57b6cd;
-
-  --ink: #0c2b39;
-  --muted: #3f6c79;
-  --line: rgba(12, 43, 57, 0.12);
-  --accent: #ff6f52;
-  --accent-soft: rgba(255, 111, 82, 0.14);
-
-  --glass: rgba(255, 255, 255, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.7);
-  --glass-shadow: 0 10px 34px rgba(8, 40, 55, 0.14);
-
-  --background: var(--sky);
-  --foreground: var(--ink);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sky: #04141b;
-    --water-top: #0a2c38;
-    --water-mid: #072430;
-    --water-deep: #03161d;
-
-    --ink: #e7f6f9;
-    --muted: #8fb6bf;
-    --line: rgba(231, 246, 249, 0.14);
-    --accent: #ff8064;
-    --accent-soft: rgba(255, 128, 100, 0.16);
-
-    --glass: rgba(9, 38, 50, 0.5);
-    --glass-border: rgba(231, 246, 249, 0.14);
-    --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
-  }
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-sky: var(--sky);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-accent: var(--accent);
-
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-editorial);
+}
+
+:root {
+  --name-red: #f4060f; /* bright, deep, saturated red */
+  --name-green: 6, 20, 11; /* near-black green (RGB), for the soft shadow */
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--sky);
-  color: var(--foreground);
+  margin: 0;
+  overflow: hidden; /* single screen, no scrolling */
+  color: #0c2b39;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  background: url("/bg/tropical-wallpaper.webp") center center / cover no-repeat
+    fixed;
 }
 
-/* ---------------------------------------------------------------------------
-   The ocean. A fixed full-screen body of water sitting below a thin air strip,
-   with a sloshing surface made of layered, drifting wave tiles. Sits behind
-   all content and ignores clicks.
---------------------------------------------------------------------------- */
-.ocean {
+/* The full-viewport stage everything is positioned within. */
+.stage {
   position: fixed;
   inset: 0;
-  z-index: -10;
-  pointer-events: none;
   overflow: hidden;
 }
 
-/* The solid body of water, starting just under the waterline. */
-.ocean__water {
+/* ---------------------------------------------------------------------------
+   Right-anchored cluster: the conveyor sits immediately left of the profile
+   photo, the whole group hugging the right edge of the screen. Using a flex row
+   keeps the two reliably side-by-side at any screen size.
+--------------------------------------------------------------------------- */
+.cluster {
   position: absolute;
-  left: 0;
-  right: 0;
+  right: 3.5%;
+  top: 0;
   bottom: 0;
-  top: var(--air-h);
-  background: linear-gradient(
-    180deg,
-    var(--water-top) 0%,
-    var(--water-mid) 34%,
-    var(--water-deep) 100%
-  );
+  display: flex;
+  align-items: flex-end; /* both anchored to the bottom */
+  gap: 1.5vw;
+  z-index: 10;
 }
 
-/* Faint shafts of light angling down through the water. */
-.ocean__water::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.5;
-  background:
-    linear-gradient(102deg, transparent 38%, rgba(255, 255, 255, 0.22) 42%, transparent 46%),
-    linear-gradient(98deg, transparent 62%, rgba(255, 255, 255, 0.16) 66%, transparent 70%);
-  mix-blend-mode: screen;
-}
-
-/* The sloshing surface: stacked wave layers crossing the waterline. */
-.ocean__surface {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 6px;
-  height: 88px;
-  animation: slosh 9s ease-in-out infinite;
-}
-
-.wave {
-  position: absolute;
-  inset: 0;
-  background-repeat: repeat-x;
-  background-position: 0 bottom;
-}
-
-.wave--back {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='88' viewBox='0 0 180 88' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C30,16 60,16 90,30 S150,44 180,30 L180,88 L0,88 Z' fill='%239bdce7' fill-opacity='0.55'/%3E%3C/svg%3E");
-  background-size: 180px 88px;
-  animation: drift-b 17s linear infinite;
-}
-
-.wave--mid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='88' viewBox='0 0 200 88' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C40,28 60,52 100,40 S160,28 200,40 L200,88 L0,88 Z' fill='%23bce6ee' fill-opacity='0.7'/%3E%3C/svg%3E");
-  background-size: 200px 88px;
-  animation: drift-f 11s linear infinite;
-}
-
-.wave--front {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='88' viewBox='0 0 160 88' preserveAspectRatio='none'%3E%3Cpath d='M0,48 C26,40 54,40 80,48 S134,56 160,48 L160,88 L0,88 Z' fill='%23cfeef3'/%3E%3C/svg%3E");
-  background-size: 160px 88px;
-  animation: drift-b 7s linear infinite;
-}
-
-@keyframes drift-f {
-  from { background-position-x: 0; }
-  to { background-position-x: 200px; }
-}
-@keyframes drift-b {
-  from { background-position-x: 0; }
-  to { background-position-x: -180px; }
-}
-@keyframes slosh {
-  0%, 100% { transform: translateY(0) skewX(0deg); }
-  50% { transform: translateY(4px) skewX(-0.5deg); }
+/* Profile photo — rounded, with the same breathing room top and bottom. */
+.profile {
+  flex: none;
+  height: 92vh;
+  width: auto;
+  margin-bottom: 3vh; /* matches the bottom spacing; top gap follows from height */
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
 }
 
 /* ---------------------------------------------------------------------------
-   Bubbles: air bubbles rising up through the water. Decorative, non-interactive.
+   The name — large red display serif across the bottom, sitting over the photo.
 --------------------------------------------------------------------------- */
-.bubbles {
-  position: fixed;
-  inset: 0;
-  z-index: -9;
-  pointer-events: none;
+.name {
+  position: absolute;
+  left: 2.5%;
+  top: 2%;
+  margin: 0;
+  z-index: 30;
+  font-family: var(--font-gwendolyn), "Brush Script MT", cursive;
+  font-weight: 700;
+  font-size: clamp(2.15rem, 9vw, 9.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--name-red);
+  /* Soft, blended near-black-green shadow so the letters look like they cast a
+     shadow onto the wallpaper — gives contrast without a hard 3D edge. */
+  text-shadow:
+    2px 4px 10px rgba(var(--name-green), 0.6),
+    4px 9px 24px rgba(var(--name-green), 0.45);
+}
+
+/* ---------------------------------------------------------------------------
+   Conveyor — center column of equal-width photos drifting downward, looping.
+   The track holds two identical copies; sliding it down by exactly one copy
+   (-50% → 0%) and repeating makes a seamless belt. Each photo carries its own
+   bottom margin so the spacing stays uniform across the seam.
+--------------------------------------------------------------------------- */
+.conveyor {
+  flex: none;
+  width: 13.5vw;
+  height: 100vh; /* full height — photos touch the top and bottom screen edges */
   overflow: hidden;
 }
 
-.bubble {
-  position: absolute;
-  bottom: -12vh;
-  width: var(--bubble-size, 32px);
-  height: var(--bubble-size, 32px);
-  border-radius: 9999px;
-  background: radial-gradient(
-    circle at 32% 28%,
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.05) 70%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  opacity: 0;
-  animation: bubble-rise var(--bubble-duration, 24s) linear infinite;
-  animation-delay: var(--bubble-delay, 0s);
-  will-change: transform, opacity;
+.conveyor__track {
+  display: flex;
+  flex-direction: column;
+  animation: conveyor 48s linear infinite;
+  will-change: transform;
 }
 
-@keyframes bubble-rise {
-  0% {
-    transform: translate(0, 0) scale(0.6);
-    opacity: 0;
+.conveyor__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+@keyframes conveyor {
+  from {
+    transform: translateY(-50%);
   }
-  12% {
-    opacity: var(--bubble-opacity, 0.5);
-  }
-  88% {
-    opacity: var(--bubble-opacity, 0.5);
-  }
-  100% {
-    transform: translate(var(--bubble-drift, 16px), -118vh) scale(1);
-    opacity: 0;
+  to {
+    transform: translateY(0);
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Frosted "aquarium glass" panels + small UI bits.
+   Narrow screens: keep the same arrangement but scaled so nothing overflows.
+   (A fully tailored mobile layout is a good next step.)
 --------------------------------------------------------------------------- */
-.card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(10px) saturate(1.1);
-  -webkit-backdrop-filter: blur(10px) saturate(1.1);
-  border-radius: 1rem;
-}
-
-.chip {
-  display: inline-block;
-  border: 1px solid var(--line);
-  border-radius: 9999px;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.72rem;
-  line-height: 1.2;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* ---------------------------------------------------------------------------
-   Reveal-on-scroll. The hidden state only applies once JS marks the root
-   ready, so the page is fully visible if JS never runs.
---------------------------------------------------------------------------- */
-[data-reveal-ready] [data-reveal] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-
-[data-reveal-ready] [data-reveal="in"] {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---------------------------------------------------------------------------
-   Looping micro-animations.
---------------------------------------------------------------------------- */
-@keyframes wave-hand {
-  0%, 60%, 100% { transform: rotate(0deg); }
-  10% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  30% { transform: rotate(14deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
-}
-.wave-hand {
-  display: inline-block;
-  transform-origin: 70% 70%;
-  animation: wave-hand 2.8s ease-in-out infinite;
-}
-
-@keyframes float-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.float-bob {
-  display: inline-block;
-  animation: float-bob 4s ease-in-out infinite;
+@media (max-width: 768px) {
+  .cluster {
+    right: 3%;
+    gap: 2vw;
+  }
+  .conveyor {
+    width: 30vw;
+    height: 74vh;
+  }
+  .profile {
+    height: 64vh;
+  }
+  .name {
+    font-size: clamp(2.5rem, 16vw, 6rem);
+  }
 }
 
 /* Respect users who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  .wave-hand,
-  .float-bob,
-  .ocean__surface,
-  .wave {
+  .conveyor__track {
     animation: none !important;
-  }
-  .bubbles {
-    display: none !important;
   }
 }

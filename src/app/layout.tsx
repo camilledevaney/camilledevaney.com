@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
+import { Geist, Geist_Mono, Gwendolyn } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +13,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Distinctive display serif for headings and the warm closing moments.
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// PP Editorial New — the high-contrast editorial display serif used for the name
+// across the bottom. Self-hosted (it's a foundry font, not on Google Fonts), so
+// it renders exactly as designed. File lives in ./fonts.
+const editorialNew = localFont({
+  src: "./fonts/PPEditorialNew-Regular.woff2",
+  variable: "--font-editorial",
+  display: "swap",
+});
+
+// Gwendolyn — a flowing calligraphy script, used for the "Camille Devaney" name.
+const gwendolyn = Gwendolyn({
+  weight: ["400", "700"],
   subsets: ["latin"],
+  variable: "--font-gwendolyn",
   display: "swap",
 });
 
@@ -33,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${editorialNew.variable} ${gwendolyn.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
