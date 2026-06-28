@@ -1,131 +1,67 @@
-# camilledevaney.com
+<div align="center">
 
-The personal website of **Camille Devaney** — a single home on the internet for her
-**professional work** (the front door) and her **artwork**.
+# camille devaney
 
-This README explains, in plain language, the two tools that make the site work:
-**Next.js** (which builds the site) and **Vercel** (which publishes it to the world).
-No prior tech knowledge needed. 👋
+[![portfolio](https://img.shields.io/badge/portfolio-camilledevaney.com-285471?style=for-the-badge&logo=vercel&logoColor=white)](https://camilledevaney.com)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camille-devaney-0b51a41a6)
+[![email](https://img.shields.io/badge/email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:camilledevaney7@gmail.com)
 
----
-
-## 🧩 How Next.js works (the tool that *builds* the site)
-
-A website is really just a set of **pages** — Home, About, Portfolio, Contact, and so
-on. **Next.js is the workshop that turns those pages into a real, fast website.**
-
-```mermaid
-flowchart LR
-    A["✍️ Pages we write<br/>Home · About · Art · Contact"] --> B["⚙️ Next.js<br/>assembles them &<br/>makes them fast"]
-    B --> C["🌐 A finished website"]
-    C --> D["👀 Visitors' browsers"]
-```
-
-The one idea that explains most of it: **a folder is a web address.** We make a folder,
-and Next.js turns it into a page people can visit.
-
-```mermaid
-flowchart LR
-    F1["📁 home"] --> U1["camilledevaney.com/"]
-    F2["📁 about"] --> U2["camilledevaney.com/about"]
-    F3["📁 portfolio"] --> U3["camilledevaney.com/portfolio"]
-```
-
-So adding a new page (say, a gallery of paintings) is as simple as adding a new
-folder — Next.js handles all the wiring behind the scenes. It also makes the site
-**fast** and **easy for Google to find**, so people discover Camille's work.
+</div>
 
 ---
 
-## 🚀 How Vercel works (the service that *publishes* the site)
-
-We never upload files by hand. Instead, a service called **Vercel** acts like an
-**always-on automatic publisher**. The moment we save a change, Vercel rebuilds the
-website and pushes it live to the whole world — usually in under a minute.
-
-```mermaid
-flowchart LR
-    A["✍️ We update the site<br/>on a computer"] -->|"save & send"| B[("🐙 GitHub<br/>online code locker")]
-    B -->|"automatic"| C["▲ Vercel<br/>builds the website"]
-    C -->|"publishes worldwide"| D["🌐 camilledevaney.com<br/>live for everyone"]
+```
+sales & trading · growth & marketing · builder @ miami · washu olin '25
 ```
 
-Step by step:
-
-1. **We save our changes** and send them up to **GitHub** (think: an online locker that
-   safely stores the site's files).
-2. **Vercel is always watching that locker.** The instant new files arrive, it
-   **automatically builds the website** (the same "assemble" step Next.js does).
-3. **Vercel publishes the result everywhere**, and `camilledevaney.com` updates itself.
-
-Vercel quietly handles the hard parts for us:
-
-- 🔒 **The padlock / HTTPS** — visitors get a secure connection, set up automatically.
-- 🌍 **Speed everywhere** — the site is copied to servers around the globe so it loads
-  fast no matter where a visitor is.
-- 👀 **Preview links** — before a change goes live, Vercel makes a private preview
-  website so we can look at it first. Nothing reaches the real site until we approve it.
-
-> 💡 Next.js and Vercel are made by **the same company**, which is why they fit together
-> so smoothly: Next.js *builds* the site, and Vercel *publishes* it.
+institutional sales and trading associate who runs full-funnel growth, builds the systems and data behind it (with ai in the loop), and produces the events in between. licensed at 18, six years on the desk.
 
 ---
 
-## 📥 First-time setup & editing the site
+### what i do
 
-**Brand-new Mac?** Start with **`INSTALL.md`** in this folder — it walks you through
-installing the few tools you need (Homebrew, Node.js, Git, Docker, and Claude), one
-copy-paste step at a time.
-
-Once those are installed, download the project onto your computer. Open the Terminal and
-paste:
-
-```bash
-git clone https://github.com/camilledevaney/camilledevaney.com.git
-cd camilledevaney.com
+```yaml
+sales & trading:  institutional coverage · cmbs / abs / rmbs · fixed income · account management
+growth:           full-funnel growth · seo & sem · paid media · content · email · social · events
+systems & ai:     claude code · crm + database design · data dashboards · bloomberg · excel
+licenses:         sie · series 7 · series 63
 ```
-
-Then open the project with **Claude**, your AI helper, which can edit files and run
-things for you:
-
-```bash
-claude --dangerously-skip-permissions
-```
-
-> 💡 **What that flag means:** it lets Claude make changes and run commands **without
-> stopping to ask your permission every time** — which makes working together much
-> smoother. Only use it inside a project you trust, like this one (it's yours). The
-> first time you run `claude`, it'll ask you to log in — just follow the prompts.
 
 ---
 
-## 🖥️ Running it on your own computer
+### work
 
-You only need this to preview changes before they go live. From the project folder:
+#### united capital markets
 
-```bash
-npm install        # one time: download what the site needs
-npm run dev        # start it, then open http://localhost:3000
+**sales & trading associate.** institutional coverage for 61 accounts on a cmbs broker-dealer desk. led the firm's rollout of ai (claude code), rebuilding a legacy excel system into the crm and trade database the desk runs on today.
+
+```yaml
+focus:  institutional sales · distressed cmbs / abs / rmbs · client events
+note:   passed sie, series 7, and 63 at 18 · grew with the firm from 4 to 12
 ```
 
-The page auto-refreshes every time a file is saved. Press `Ctrl+C` to stop.
+#### united real estate ventures
 
-Prefer a one-command, self-contained setup? Use Docker:
+**growth & marketing.** full-funnel marketing for a $20m waterfront listing from a standing start. seo, paid, content, email, and social, grown to 2,000 instagram followers in under two weeks.
 
-```bash
-docker compose up --build      # then open http://localhost:3000
+```yaml
+channels:  seo · paid media · content · email · social · broker events
 ```
 
-More detail — the full project tour, the build commands, and the Docker files — lives
-in **`CLAUDE.md`** in this same folder.
+#### find it & gaggl
+
+**co-founder & cmo.** co-founded find it, a qr smart-sticker product that won 1st place in the olin cup, and led growth for gaggl, a social app, to 920+ users with a 30-person ambassador team.
+
+```yaml
+role:  go-to-market · brand · community · growth
+```
 
 ---
 
-## 🛠️ What it's built with
+<div align="center">
 
-| Piece | Tool | In one line |
-|---|---|---|
-| Builds the pages | **Next.js 16** | Turns our page files into the website |
-| The look | **Tailwind CSS** | Colors, spacing, fonts, layout |
-| Publishes it live | **Vercel** | Builds and serves the site to the world |
-| Stores the code | **GitHub** | The online locker the code lives in |
+🌴 &nbsp; miami, fl &nbsp;·&nbsp; [camilledevaney.com](https://camilledevaney.com)
+
+</div>
+
+<sub>Editing this site? Start with <code>INSTALL.md</code>, then <code>CLAUDE.md</code>.</sub>

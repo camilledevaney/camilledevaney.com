@@ -1,161 +1,114 @@
-// Home — "Editorial Coastal". A warm ivory canvas with a single terracotta
-// accent. The golden-hour portrait (public/photos/hero.jpg) anchors the right
-// of an asymmetric composition: the name sits top-left in the display serif,
-// the positioning, intro, and links sit bottom-left. One quiet, deliberate
-// screen. The professional side is the front door.
+// Home — "Editorial Coastal" as an immersive seascape. All copy and links live
+// in src/content.json so the text is easy to edit. The page is the scene: sky
+// above the horizon, a solid ocean below it. The frameless portrait bleeds in
+// full-height on the right (a cropped hero on mobile), the name is set on the
+// sky, and on load the scene pulls focus while the type flips and rises in.
 
-import Image from "next/image";
-import hero from "../../public/photos/hero.jpg";
+import { Fragment } from "react";
+import content from "@/content.json";
 
-const RESUME = "/Camille-Devaney-Resume.pdf";
-const EMAIL = "camilledevaney7@gmail.com";
-const LINKEDIN = "https://www.linkedin.com/in/camille-devaney-0b51a41a6";
+const PAD = "mx-auto w-full max-w-[90rem] px-6 sm:px-10 lg:px-16";
 
 export default function Home() {
+  const { hero, roles, intro, links, footer } = content;
+
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[90rem] flex-col px-6 sm:px-10 lg:px-16">
-      {/* Top bar — wordmark + location, in the mono caption voice. */}
-      <header
-        className="reveal flex items-center justify-between gap-4 border-b border-line py-6 lg:py-7"
-        style={{ animationDelay: "0.05s" }}
-      >
-        <span className="font-mono text-[0.68rem] uppercase tracking-[0.34em] text-ink">
-          Camille Devaney
-        </span>
-        <span className="font-mono text-[0.68rem] uppercase tracking-[0.34em] text-muted">
-          Portfolio
-        </span>
-      </header>
+    <main className="relative flex min-h-dvh flex-col overflow-hidden">
+      {/* The scene + the name on the sky. */}
+      <div className="hero-media">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={hero.image} alt={hero.imageAlt} className="hero-photo" />
+        <div className="hero-scrim" aria-hidden />
 
-      {/* Hero — asymmetric editorial grid.
-          Block order in the DOM (name, photo, the rest) is also the mobile
-          stacking order, so the portrait reads as the anchor on a phone too. */}
-      <section className="grid flex-1 grid-cols-1 gap-y-10 py-12 sm:gap-y-12 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:grid-rows-[auto_minmax(2.5rem,1fr)_auto] lg:gap-x-14 lg:gap-y-0 lg:py-10">
-        {/* A — eyebrow + name (top-left) */}
-        <div className="flex flex-col lg:col-start-1 lg:row-start-1 lg:self-start lg:pt-2">
-          <p
-            className="reveal flex items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.3em] text-coral"
-            style={{ animationDelay: "0.15s" }}
-          >
-            <span className="inline-block h-px w-7 bg-coral" aria-hidden />
-            Operator · Miami, FL
-          </p>
-          <h1
-            className="reveal mt-6 font-editorial text-[clamp(3.4rem,10vw,7.25rem)] leading-[0.9] tracking-[-0.015em] text-ink"
-            style={{ animationDelay: "0.25s" }}
-          >
-            Camille
-            <br />
-            Devaney
-          </h1>
+        <div className="masthead absolute inset-x-0 top-[3.5rem] z-20 sm:top-[4.5rem] lg:top-[7.5rem]">
+          <div className={PAD}>
+            <p className="enter-eyebrow flex items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.3em] text-sky-ink">
+              <span className="rule-draw inline-block h-px w-7 bg-coral" aria-hidden />
+              {hero.eyebrow}
+            </p>
+            <h1
+              className="name-enter mt-6 font-editorial text-[clamp(2.9rem,11.5vw,7.25rem)] leading-[0.9] tracking-[-0.015em] text-sky-ink"
+              style={{ textShadow: "0 2px 22px rgba(16,46,78,0.30)" }}
+            >
+              <span className="name-line">{hero.nameLine1}</span>
+              <span className="name-line">{hero.nameLine2}</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      {/* Lower content over the ocean */}
+      <div className="relative z-10 flex flex-col lg:flex-1 lg:justify-end">
+        <div className={`${PAD} pt-10 pb-12 lg:pt-0 lg:pb-0`}>
+          <div className="flex max-w-xl flex-col gap-7 lg:pb-12">
+            <p className="enter enter-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sky-ink">
+              {roles.map((role, i) => (
+                <Fragment key={role}>
+                  {i > 0 && (
+                    <span className="text-coral" aria-hidden>
+                      ·
+                    </span>
+                  )}
+                  <span>{role}</span>
+                </Fragment>
+              ))}
+            </p>
+
+            <p className="enter enter-4 text-[1.05rem] leading-relaxed text-sky-muted sm:text-[1.12rem]">
+              {intro}
+            </p>
+
+            <div className="enter enter-5 flex flex-wrap items-center gap-x-5 gap-y-4">
+              <a
+                href={links.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
+              >
+                Resume
+                <span
+                  aria-hidden
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  ↗
+                </span>
+              </a>
+
+              <a
+                href={links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
+                  <path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.04-3.34.72-4.04-1.6-4.04-1.6-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.02 2.9-.02 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.29C24 5.78 18.63.5 12 .5z" />
+                </svg>
+              </a>
+
+              <a
+                href={links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* B — the centerpiece portrait, matted and framed */}
-        <figure
-          className="flex flex-col lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:items-end lg:justify-self-end lg:self-center"
-          aria-labelledby="hero-caption"
+        <footer
+          className={`enter enter-6 ${PAD} flex flex-col gap-y-2.5 pb-8 pt-4 font-mono text-[0.6rem] uppercase tracking-[0.22em] text-sky-muted lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2`}
         >
-          <div className="reveal-image w-full max-w-[20rem] self-center rounded-[12px] bg-paper-2 p-2.5 shadow-[0_50px_90px_-42px_rgba(33,29,22,0.55)] ring-1 ring-line sm:max-w-[24rem] lg:max-w-[26rem] lg:self-end xl:max-w-[29rem]">
-            <Image
-              src={hero}
-              alt="Camille Devaney smiling with her eyes closed and wind in her hair, on a boat at sea during golden hour, the deep blue ocean and a clear sky behind her."
-              priority
-              placeholder="blur"
-              sizes="(min-width: 1280px) 29rem, (min-width: 1024px) 26rem, (min-width: 640px) 24rem, 80vw"
-              className="h-auto w-full rounded-[6px]"
-            />
-          </div>
-          <figcaption
-            id="hero-caption"
-            className="reveal mt-5 flex items-center gap-3 self-center font-mono text-[0.6rem] uppercase tracking-[0.26em] text-muted lg:self-end"
-            style={{ animationDelay: "0.8s" }}
-          >
-            <span className="inline-block h-px w-6 bg-coral" aria-hidden />
-            Busy watering my own grass
-          </figcaption>
-        </figure>
-
-        {/* C — positioning, intro, links (bottom-left) */}
-        <div className="flex max-w-xl flex-col gap-7 lg:col-start-1 lg:row-start-3 lg:self-end lg:pb-2">
-          <p
-            className="reveal flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink"
-            style={{ animationDelay: "0.45s" }}
-          >
-            Institutional Sales &amp; Trading
-            <span className="text-coral" aria-hidden>
-              ·
-            </span>
-            Growth &amp; Marketing
-            <span className="text-coral" aria-hidden>
-              ·
-            </span>
-            Builder &amp; Creative
-          </p>
-
-          <p
-            className="reveal text-[1.05rem] leading-relaxed text-muted sm:text-[1.12rem]"
-            style={{ animationDelay: "0.55s" }}
-          >
-            I grow audiences and communities, and I build the data, systems, and
-            AI that scale them. A marketer&rsquo;s instinct for what resonates, an
-            operator&rsquo;s habit of shipping. From an institutional trading desk
-            to leading my firm&rsquo;s move onto Claude Code, to a luxury listing
-            and two startups grown from zero.
-          </p>
-
-          <div
-            className="reveal flex flex-wrap items-center gap-x-7 gap-y-4"
-            style={{ animationDelay: "0.65s" }}
-          >
-            <a
-              href={RESUME}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-paper-2 transition-colors duration-300 hover:bg-coral"
-            >
-              Résumé
-              <span
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              >
-                ↗
-              </span>
-            </a>
-
-            <a
-              href={`mailto:${EMAIL}`}
-              className="border-b border-line pb-1 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:border-coral hover:text-coral"
-            >
-              Email
-            </a>
-
-            <a
-              href={LINKEDIN}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 border-b border-line pb-1 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:border-coral hover:text-coral"
-            >
-              LinkedIn
-              <span
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              >
-                ↗
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Credits strip */}
-      <footer
-        className="reveal flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line py-6 font-mono text-[0.6rem] uppercase tracking-[0.26em] text-muted"
-        style={{ animationDelay: "0.75s" }}
-      >
-        <span>Licensed · SIE · Series 7 · Series 63</span>
-        <span>WashU Olin · Finance &amp; Marketing</span>
-        <span>© 2026 Camille Devaney</span>
-      </footer>
+          {footer.map((line) => (
+            <span key={line}>{line}</span>
+          ))}
+        </footer>
+      </div>
     </main>
   );
 }

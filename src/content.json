@@ -1,0 +1,42 @@
+{
+  "site": {
+    "name": "Camille Devaney",
+    "tagline": "Builder & Creative",
+    "title": "Camille Devaney | Builder & Creative",
+    "description": "Camille Devaney is a Miami-based builder and creative working across growth and marketing, institutional sales and trading, and AI-driven systems. She grows audiences and communities with curated AI and builds the data and CRM behind them.",
+    "url": "https://camilledevaney.com",
+    "ogImage": "/photos/hero.jpg",
+    "keywords": [
+      "Camille Devaney",
+      "growth and marketing",
+      "institutional sales and trading",
+      "CMBS",
+      "community growth",
+      "AI systems",
+      "Claude Code",
+      "CRM",
+      "Miami",
+      "builder",
+      "creative"
+    ]
+  },
+  "hero": {
+    "image": "/photos/hero.jpg",
+    "imageAlt": "Camille Devaney smiling with her eyes closed and wind in her hair, on a boat at sea during golden hour, the deep blue ocean and a clear sky behind her.",
+    "eyebrow": "Builder & Creative · Miami",
+    "nameLine1": "Camille",
+    "nameLine2": "Devaney"
+  },
+  "roles": ["Growth & Marketing", "Institutional Sales & Trading"],
+  "intro": "I grow audiences and communities with curated AI systems. A marketer's instinct for what resonates, an entrepreneurial habit of shipping. From an institutional trading desk to leading my firm's AI modernization and CRM rebuild.",
+  "links": {
+    "resume": "/Camille-Devaney-Resume.pdf",
+    "github": "https://github.com/camilledevaney",
+    "linkedin": "https://www.linkedin.com/in/camille-devaney-0b51a41a6"
+  },
+  "footer": [
+    "Licensed · SIE · Series 7 & 63",
+    "WashU Finance & Marketing",
+    "© 2026 Camille Devaney"
+  ]
+}
