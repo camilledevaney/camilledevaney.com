@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 /*
-  camilledevaney.com — single-screen (no-scroll) landing page.
-  A tropical-wallpaper background; a rounded profile photo on the left; the name
-  in a large red display serif across the bottom; and a center column of photos
-  that drifts downward like a conveyor belt, looping forever.
+  camilledevaney.com — "Editorial Coastal" home page.
+  A warm ivory canvas, deep warm-ink type, and a single terracotta accent.
+  The golden-hour portrait (public/photos/hero.jpg) is the visual anchor,
+  set to one side of a confident editorial-serif name. Restraint over collage.
 */
+
 @theme inline {
+  /* Type roles */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-editorial);
-}
+  --font-editorial: var(--font-editorial);
 
-:root {
-  --name-red: #f4060f; /* bright, deep, saturated red */
-  --name-green: 6, 20, 11; /* near-black green (RGB), for the soft shadow */
+  /* Palette — warm paper, warm near-black ink, one coral accent */
+  --color-paper: #f3ecdd; /* warm ivory / sand */
+  --color-paper-2: #f8f2e6; /* lighter mat tone */
+  --color-ink: #211d16; /* deep, slightly-warm near-black */
+  --color-muted: #6c6354; /* warm taupe, secondary text */
+  --color-coral: #c8553d; /* terracotta accent (used sparingly) */
+  --color-line: #d8cdb7; /* hairline rules + borders */
 }
 
 html,
@@ -24,133 +29,80 @@ body {
 
 body {
   margin: 0;
-  overflow: hidden; /* single screen, no scrolling */
-  color: #0c2b39;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  background: url("/bg/tropical-wallpaper.webp") center center / cover no-repeat
-    fixed;
+  /* Faint warm vignette + a whisper of grain-free tonal depth so the paper
+     reads like stock, not a flat fill. Very subtle. */
+  background-image:
+    radial-gradient(
+      120% 90% at 82% 8%,
+      rgba(200, 85, 61, 0.06) 0%,
+      rgba(200, 85, 61, 0) 55%
+    ),
+    radial-gradient(
+      90% 70% at 8% 100%,
+      rgba(33, 29, 22, 0.05) 0%,
+      rgba(33, 29, 22, 0) 60%
+    );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* The full-viewport stage everything is positioned within. */
-.stage {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
+/* Display serif: slightly tightened, optical-leading for big sizes. */
+.font-editorial {
+  font-feature-settings: "liga" 1, "kern" 1;
 }
 
-/* ---------------------------------------------------------------------------
-   Right-anchored cluster: the conveyor sits immediately left of the profile
-   photo, the whole group hugging the right edge of the screen. Using a flex row
-   keeps the two reliably side-by-side at any screen size.
---------------------------------------------------------------------------- */
-.cluster {
-  position: absolute;
-  right: 3.5%;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: flex-end; /* both anchored to the bottom */
-  gap: 1.5vw;
-  z-index: 10;
-}
-
-/* Profile photo — rounded, with the same breathing room top and bottom. */
-.profile {
-  flex: none;
-  height: 92vh;
-  width: auto;
-  margin-bottom: 3vh; /* matches the bottom spacing; top gap follows from height */
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+/* Selection picks up the accent. */
+::selection {
+  background: rgba(200, 85, 61, 0.18);
+  color: var(--color-ink);
 }
 
 /* ---------------------------------------------------------------------------
-   The name — large red display serif across the bottom, sitting over the photo.
+   Load reveal — a soft fade + settle, staggered via inline animation-delay.
 --------------------------------------------------------------------------- */
-.name {
-  position: absolute;
-  left: 2.5%;
-  top: 2%;
-  margin: 0;
-  z-index: 30;
-  font-family: var(--font-gwendolyn), "Brush Script MT", cursive;
-  font-weight: 700;
-  font-size: clamp(2.15rem, 9vw, 9.4rem);
-  line-height: 0.9;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  color: var(--name-red);
-  /* Soft, blended near-black-green shadow so the letters look like they cast a
-     shadow onto the wallpaper — gives contrast without a hard 3D edge. */
-  text-shadow:
-    2px 4px 10px rgba(var(--name-green), 0.6),
-    4px 9px 24px rgba(var(--name-green), 0.45);
-}
-
-/* ---------------------------------------------------------------------------
-   Conveyor — center column of equal-width photos drifting downward, looping.
-   The track holds two identical copies; sliding it down by exactly one copy
-   (-50% → 0%) and repeating makes a seamless belt. Each photo carries its own
-   bottom margin so the spacing stays uniform across the seam.
---------------------------------------------------------------------------- */
-.conveyor {
-  flex: none;
-  width: 13.5vw;
-  height: 100vh; /* full height — photos touch the top and bottom screen edges */
-  overflow: hidden;
-}
-
-.conveyor__track {
-  display: flex;
-  flex-direction: column;
-  animation: conveyor 48s linear infinite;
-  will-change: transform;
-}
-
-.conveyor__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-bottom: 16px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
-}
-
-@keyframes conveyor {
+@keyframes rise {
   from {
-    transform: translateY(-50%);
+    opacity: 0;
+    transform: translateY(16px);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Narrow screens: keep the same arrangement but scaled so nothing overflows.
-   (A fully tailored mobile layout is a good next step.)
---------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .cluster {
-    right: 3%;
-    gap: 2vw;
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.985);
   }
-  .conveyor {
-    width: 30vw;
-    height: 74vh;
-  }
-  .profile {
-    height: 64vh;
-  }
-  .name {
-    font-size: clamp(2.5rem, 16vw, 6rem);
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-/* Respect users who ask for less motion. */
+.reveal {
+  opacity: 0;
+  animation: rise 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.reveal-image {
+  opacity: 0;
+  animation: settle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .conveyor__track {
-    animation: none !important;
+  .reveal,
+  .reveal-image {
+    opacity: 1;
+    animation: none;
+  }
+  body {
+    background-attachment: scroll;
   }
 }
