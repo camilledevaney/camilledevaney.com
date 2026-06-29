@@ -5,6 +5,7 @@
 // sky, and on load the scene pulls focus while the type flips and rises in.
 
 import { Fragment } from "react";
+import Link from "next/link";
 import content from "@/content.json";
 
 const PAD = "mx-auto w-full max-w-[90rem] px-6 sm:px-10 lg:px-16";
@@ -74,6 +75,19 @@ export default function Home() {
                 </span>
               </a>
 
+              <Link
+                href={links.portfolio}
+                className="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
+              >
+                Portfolio
+                <span
+                  aria-hidden
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  ↗
+                </span>
+              </Link>
+
               <a
                 href={links.github}
                 target="_blank"
@@ -95,6 +109,18 @@ export default function Home() {
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
                   <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                </svg>
+              </a>
+
+              <a
+                href={links.calendly}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Book a meeting on Calendly"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
+                  <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
                 </svg>
               </a>
             </div>

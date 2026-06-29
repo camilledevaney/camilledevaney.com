@@ -45,3 +45,6 @@ next-env.d.ts
 /Art Portfolio Photos/
 /Personal Photos For Website/
 /Reference Photos/
+
+# Source archive for the CBD logo (extracted into /public).
+/CBD.zip

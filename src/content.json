@@ -31,12 +31,38 @@
   "intro": "I grow audiences and communities with curated AI systems. A marketer's instinct for what resonates, an entrepreneurial habit of shipping. From an institutional trading desk to leading my firm's AI modernization and CRM rebuild.",
   "links": {
     "resume": "/Camille-Devaney-Resume.pdf",
+    "portfolio": "/portfolio",
     "github": "https://github.com/camilledevaney",
-    "linkedin": "https://www.linkedin.com/in/camille-devaney-0b51a41a6"
+    "linkedin": "https://www.linkedin.com/in/camille-devaney-0b51a41a6",
+    "calendly": "https://calendly.com/camilledevaney7/30min"
   },
   "footer": [
     "Licensed · SIE · Series 7 & 63",
     "WashU Finance & Marketing",
     "© 2026 Camille Devaney"
-  ]
+  ],
+  "portfolio": {
+    "title": "Visual Art Portfolio",
+    "author": "Camille Devaney Selected Works",
+    "pieces": [
+      { "img": "/art/06.jpg", "title": "Punch Buggy", "text": "2019, Oil on canvas, 22 x 28 in." },
+      { "img": "/art/01.jpg", "title": "Octopus", "text": "2020, Acrylic on wooden skateboard, 10 x 34 in." },
+      { "img": "/art/15.jpg", "back": "/art/16.jpg", "title": "Pearly Depths", "text": "2025, Ceramic built conch and bedazzled by pearls, 4 x 10 in." },
+      { "img": "/art/13.jpg", "back": "/art/12.jpg", "title": "Laissez Les Bons Temps Rouler", "text": "2026, Acrylic on dyed denim" },
+      { "img": "/art/02.jpg", "title": "Overlord", "text": "2021, Acrylic on canvas 12 x 28 in." },
+      { "img": "/art/08.jpg", "title": "Nifty 250", "text": "2026, Acrylic on linen" },
+      { "img": "/art/10.jpg", "title": "Balance", "text": "2025, Ceramic, 6 x 14 in." },
+      { "img": "/art/11.jpg", "title": "Pink Pather", "text": "2026, Fabric Paint on linen" },
+      { "img": "/art/04.jpg", "title": "Natural Born Quiller", "text": "Year, Paper on board, \"quilling\" method, 11 x 14 in." },
+      { "img": "/art/17.jpg", "title": "Clowning Around", "text": "2019, Oil on Canvas, 16 x 20 in." },
+      { "img": "/art/19.jpg", "title": "Shrimp Heaven Now!", "text": "2022, collage, 24 x 36." },
+      { "img": "/art/18.jpg", "title": "Blue & Orange Case Study", "text": "2018, Acrylic on Canvas, 15 x 20 in." },
+      { "img": "/art/09.jpg", "title": "Presenting your Royal Highness, the illustrious King Julien XIII, self-proclaimed Lord of the Lemurs, etc., etc., hurray everybody.", "text": "2025, Acrylic on Foam, 7 x 12 in." },
+      { "img": "/art/20.jpg", "back": "/art/21.jpg", "title": "Grapes of Wrath", "text": "2020, Acrylic on demin" },
+      { "img": "/art/07.jpg", "title": "Sunny Side Up", "text": "2020, Oil on canvas, 32 x 32 in." },
+      { "img": "/art/05.jpg", "title": "Wood Case Study", "text": "2019, Oil on canvas, 8 x 18 in." },
+      { "img": "/art/03.jpg", "title": "Bootylicious", "text": "2018, Oil on Canvas, 9x12 in." },
+      { "img": "/art/14.jpg", "title": "Table Explosion Size Case Study", "text": "2025, Ceramic with experimental glaze technique, 18 x 48 in." }
+    ]
+  }
 }

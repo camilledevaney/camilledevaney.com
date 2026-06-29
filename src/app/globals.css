@@ -264,3 +264,329 @@ body {
     filter: none;
   }
 }
+
+/* ===========================================================================
+   PORTFOLIO PAGE (/portfolio) — "City of Angels"-style vertical scroll on the
+   tropical wallpaper. Centered column, blue titles (#06aeef), fonts borrowed
+   from the site (Geist / Geist Mono ≈ Diatype / Founders Grotesk Mono), and a
+   fade-and-rise reveal as each block enters view.
+=========================================================================== */
+.art {
+  --art-blue: #db1a1f; /* deep-but-bright red (kept the var name for simplicity) */
+  --art-ink: #11242e;
+  /* Approx height of the big title — also used to overlap it onto the first
+     image. Tuned so "VISUAL ART PORTFOLIO" fills the width minus ~1in each side. */
+  --title-h: calc((100vw - 2in) / 12.9);
+  /* How far to slide the name + title down over the image (text only). Applied
+     to the name/title directly (not the masthead, which the reveal controls). */
+  --text-drop: 2rem;
+  /* Display font for the masthead. Swap this to the real BB Torsos Pro once its
+     font file is added; until then it falls back to a clean grotesque. */
+  --font-torsos: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: clip; /* the full-width title can't cause a sideways scrollbar */
+  background: url("/bg/tropical-wallpaper.webp") center top / cover no-repeat
+    fixed;
+  font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
+  color: var(--art-ink);
+}
+
+/* Soft veil so text stays readable over the busy wallpaper (wallpaper still
+   shows through). Turn the opacity down to show more wallpaper, up for less. */
+.art-veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(248, 252, 253, 0.55);
+}
+
+.art-wrap {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 90rem;
+  padding: 2rem 1.5rem 6rem;
+}
+
+.art-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0 3.5rem;
+}
+.art-back {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--art-ink);
+  text-decoration: none;
+  transition: color 0.2s ease-out;
+}
+.art-back:hover {
+  color: var(--art-blue);
+}
+
+/* Top menu: home (CBD logo) on the left, social icons on the right — all red,
+   matching the home page's icon style. */
+.art-menu {
+  position: absolute;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.75rem;
+}
+.art-menu-home {
+  display: inline-flex;
+}
+/* Hyperrealistic 3D CBD logo (transparent PNG). Height kept in line with the
+   social icon buttons so the menu row stays visually consistent. */
+.cbd-logo {
+  display: block;
+  height: 3.3rem;
+  width: auto;
+  transition: opacity 0.2s ease-out;
+}
+.art-menu-home:hover .cbd-logo {
+  opacity: 0.78;
+}
+.art-menu-social {
+  display: flex;
+  gap: 0.6rem;
+}
+.art-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--art-blue) 40%, transparent);
+  color: var(--art-blue);
+  text-decoration: none;
+  transition:
+    background-color 0.25s ease-out,
+    color 0.25s ease-out,
+    border-color 0.25s ease-out;
+}
+.art-icon:hover {
+  background-color: var(--art-blue);
+  border-color: var(--art-blue);
+  color: #fff;
+}
+.art-icon-svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.art-masthead {
+  position: relative;
+  z-index: 5; /* sits above the first image so the title overlaps it */
+  padding: 4.5rem 0 0;
+  text-align: center;
+}
+/* CAMILLE DEVANEY — centered at the very top, all caps, display font. */
+.art-name {
+  margin: 0 0 1.6rem;
+  font-family: var(--font-torsos);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+  color: var(--art-ink);
+  transform: translateY(var(--text-drop, 0px));
+}
+/* VISUAL ART PORTFOLIO — one line, spanning the screen minus ~1in each side.
+   Rendered as SVG text so it always fills the width regardless of the font. */
+/* One line, natural letter spacing, sized so the text itself fills the width
+   (the divisor ≈ the title's width in ems, so it scales to ~100vw - 2in). */
+.art-h1 {
+  margin: 0 auto;
+  width: calc(100vw - 2in);
+  white-space: nowrap;
+  text-align: center;
+  font-family: var(--font-torsos);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: normal;
+  font-size: var(--title-h);
+  color: var(--art-blue);
+  transform: translateY(var(--text-drop, 0px));
+}
+.art-intro {
+  margin: 2rem auto 0;
+  max-width: 32rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #3a5560;
+}
+
+/* The stack of pieces — each piece is an image beside its caption, with the
+   image/caption sides alternating down the page. */
+.art-pieces {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 9vh, 7.5rem);
+  padding-top: 0;
+}
+
+/* First piece is pulled up under the masthead so the title overlaps its top
+   third, with the name resting just above the image. --overlap is the extra
+   pull beyond the title height (bigger = title lower on the photo + name closer
+   to the image's top edge). Keep it under ~1.3rem so the name doesn't touch. */
+.art-pieces > .art-piece:first-child {
+  --overlap: 1.35rem;
+  margin-top: calc(-1 * (var(--title-h) + var(--overlap)));
+  position: relative;
+  z-index: 1;
+}
+/* First piece's caption sits at the bottom of the image (not centered), since
+   the title overlaps the top. */
+.art-pieces > .art-piece:first-child .art-cap {
+  align-self: end;
+  padding-bottom: 2.5rem;
+}
+.art-piece {
+  margin: 0;
+  /* Three columns: the image always sits in the centered middle column, with
+     the caption in the left or right column — so the image stays dead-center
+     no matter which side the text is on. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+}
+
+/* Image — sized to fully fit on screen. Two-sided pieces fade to the "back"
+   image on hover. */
+.art-figwrap {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  line-height: 0;
+}
+.art-img {
+  display: block;
+  width: auto;
+  max-width: 48vw;
+  max-height: 70vh;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 30px 70px -30px rgba(8, 24, 40, 0.6);
+}
+.art-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.art-figwrap.has-back {
+  cursor: pointer;
+}
+.art-figwrap.has-back:hover .art-back {
+  opacity: 1;
+}
+
+/* Caption — title + text as one bold paragraph in the display font, beside the
+   image; the title is italic and blue. */
+.art-cap {
+  grid-column: 3; /* caption to the right of the centered image… */
+  grid-row: 1; /* …kept on the image's row so it stays vertically centered */
+  justify-self: start; /* …hugging the image */
+  max-width: 24rem;
+  text-align: left;
+  font-family: var(--font-torsos);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+  line-height: 1.4;
+}
+.art-piece:nth-child(even) .art-cap {
+  grid-column: 1; /* …and on the left for alternating pieces */
+  justify-self: end;
+  text-align: right;
+}
+.art-title {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--art-blue);
+}
+.art-text {
+  font-weight: 400;
+  color: var(--art-ink);
+}
+
+.art-footer {
+  padding-top: 6rem;
+  text-align: center;
+}
+
+/* Fade + rise reveal (template's scroll feel). Hidden only once JS marks it
+   ready, so content is visible if JS never runs. */
+.art [data-reveal].reveal-ready {
+  opacity: 0;
+  transform: translateY(34px);
+}
+.art [data-reveal] {
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.art [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Tablet / phone: stack the image and caption instead of side-by-side. */
+@media (max-width: 768px) {
+  .art-piece,
+  .art-piece:nth-child(even) {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    justify-items: center;
+  }
+  .art-figwrap {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .art-img {
+    max-width: 92vw;
+    max-height: 66vh;
+  }
+  .art-cap,
+  .art-piece:nth-child(even) .art-cap {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: center;
+    text-align: center;
+    max-width: 34rem;
+  }
+}
+
+/* On phones a 1-inch margin each side is too much — use small margins there. */
+@media (max-width: 640px) {
+  .art {
+    --title-h: calc((100vw - 2rem) / 12.9);
+  }
+  .art-h1 {
+    width: calc(100vw - 2rem);
+    font-size: var(--title-h);
+  }
+}
