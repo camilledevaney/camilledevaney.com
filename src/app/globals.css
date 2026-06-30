@@ -42,14 +42,17 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Sky stops scale with --horizon so the whole sky compresses above the
+     waterline. On mobile (--horizon 13%) this keeps the water starting right
+     below the top, so no strip of pale sky shows under the cropped hero. */
   background: linear-gradient(
     to bottom,
     #2a74bf 0%,
-    #3585cf 14%,
-    #4f9ce2 29%,
-    #79c1f2 44%,
-    #a7e0f1 51%,
-    #cbe5d8 54.5%,
+    #3585cf calc(var(--horizon) * 0.25),
+    #4f9ce2 calc(var(--horizon) * 0.52),
+    #79c1f2 calc(var(--horizon) * 0.79),
+    #a7e0f1 calc(var(--horizon) * 0.92),
+    #cbe5d8 calc(var(--horizon) * 0.98),
     #d9e9e0 var(--horizon),
     var(--water) calc(var(--horizon) + 1.2%),
     var(--water) 100%
@@ -130,16 +133,11 @@ body {
    in a strong stagger. No flat fades.
 --------------------------------------------------------------------------- */
 @keyframes focus-pull {
-  0% {
+  from {
     opacity: 0;
-    filter: blur(26px) brightness(1.12);
   }
-  55% {
+  to {
     opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0) brightness(1);
   }
 }
 
