@@ -28,18 +28,18 @@
     "nameLine2": "Devaney"
   },
   "roles": ["Growth & Marketing", "Institutional Sales & Trading"],
-  "intro": "I grow audiences and communities with curated AI systems. A marketer's instinct for what resonates, an entrepreneurial habit of shipping. From an institutional trading desk to leading my firm's AI modernization and CRM rebuild.",
+  "intro": "Raised on a CMBS trading desk. Now leading my firm's AI modernization, database migration, and CRM rebuild. A marketer's instinct for what resonates, the taste of a lifelong creative, and the range to run the whole funnel, brand to growth. I cultivate relationships and grow community through events. Born to sell.",
   "links": {
-    "resume": "/Camille-Devaney-Resume.pdf",
+    "resume": "/Camille-Devaney-Master-Resume.pdf",
     "portfolio": "/portfolio",
+    "ucm": "https://www.unitedcapital.com/",
     "github": "https://github.com/camilledevaney",
     "linkedin": "https://www.linkedin.com/in/camille-devaney-0b51a41a6",
     "calendly": "https://calendly.com/camilledevaney7/30min"
   },
   "footer": [
-    "Licensed · SIE · Series 7 & 63",
-    "WashU Finance & Marketing",
-    "© 2026 Camille Devaney"
+    "Licensed · Series 7, 63, & SIE circa 2021 ·",
+    "WashU Finance & Marketing Double Major · Environmental Analysis Minor"
   ],
   "portfolio": {
     "title": "Visual Art Portfolio",
@@ -53,7 +53,7 @@
       { "img": "/art/08.jpg", "title": "Nifty 250", "text": "2026, Acrylic on linen" },
       { "img": "/art/10.jpg", "title": "Balance", "text": "2025, Ceramic, 6 x 14 in." },
       { "img": "/art/11.jpg", "title": "Pink Pather", "text": "2026, Fabric Paint on linen" },
-      { "img": "/art/04.jpg", "title": "Natural Born Quiller", "text": "Year, Paper on board, \"quilling\" method, 11 x 14 in." },
+      { "img": "/art/04.jpg", "title": "Natural Born Quiller", "text": "2019, Paper on board, \"quilling\" method, 11 x 14 in." },
       { "img": "/art/17.jpg", "title": "Clowning Around", "text": "2019, Oil on Canvas, 16 x 20 in." },
       { "img": "/art/19.jpg", "title": "Shrimp Heaven Now!", "text": "2022, collage, 24 x 36." },
       { "img": "/art/18.jpg", "title": "Blue & Orange Case Study", "text": "2018, Acrylic on Canvas, 15 x 20 in." },

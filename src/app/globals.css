@@ -98,22 +98,30 @@ body {
 }
 
 @media (min-width: 1024px) {
+  body {
+    /* Full-bleed landscape hero photo; the text + elements overlay it in their
+       existing positions. */
+    background: url("/hero-landscape.jpg") center center / cover no-repeat;
+  }
   .hero-media {
     display: contents;
   }
+  /* The portrait hero is replaced by the full-bleed background above. */
   .hero-photo {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 0;
-    height: 100dvh;
-    width: auto;
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
+    display: none;
   }
   .hero-scrim {
     display: none;
+  }
+  /* Navy scrim behind body copy for legibility over the photo. The box-shadow
+     spread (same color) extends the navy around the text without taking layout
+     space, so the text keeps its exact position. */
+  .scrim-navy {
+    border-radius: 0.7rem;
+    background: rgba(15, 35, 55, 0.4);
+    box-shadow: 0 0 0 0.7rem rgba(15, 35, 55, 0.4);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
   }
 }
 
@@ -272,6 +280,8 @@ body {
 .art {
   --art-blue: #db1a1f; /* deep-but-bright red (kept the var name for simplicity) */
   --art-ink: #11242e;
+  --header-h: 67px; /* height of the fixed header bar */
+  --stage-bottom: 39px; /* bottom gap = header minus the px it grew */
   /* Approx height of the big title — also used to overlap it onto the first
      image. Tuned so "VISUAL ART PORTFOLIO" fills the width minus ~1in each side. */
   --title-h: calc((100vw - 2in) / 12.9);
@@ -283,7 +293,7 @@ body {
   --font-torsos: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
   position: relative;
   min-height: 100dvh;
-  overflow-x: clip; /* the full-width title can't cause a sideways scrollbar */
+  overflow-x: clip;
   background: url("/bg/tropical-wallpaper.webp") center top / cover no-repeat
     fixed;
   font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
@@ -329,15 +339,21 @@ body {
 /* Top menu: home (CBD logo) on the left, social icons on the right — all red,
    matching the home page's icon style. */
 .art-menu {
-  position: absolute;
-  top: 1.25rem;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-h); /* exact bar height; content centered within */
   padding: 0 1.75rem;
+  /* Same wallpaper (+ veil) as the page, pinned to the viewport, so the bar is
+     seamless with the background and hides content scrolling underneath it. */
+  background:
+    linear-gradient(rgba(248, 252, 253, 0.55), rgba(248, 252, 253, 0.55)),
+    url("/bg/tropical-wallpaper.webp") center top / cover no-repeat fixed;
 }
 .art-menu-home {
   display: inline-flex;
@@ -346,16 +362,50 @@ body {
    social icon buttons so the menu row stays visually consistent. */
 .cbd-logo {
   display: block;
-  height: 3.3rem;
+  height: 3.7rem; /* as big as fits in the 67px bar (≈4px margin top/bottom) */
   width: auto;
   transition: opacity 0.2s ease-out;
 }
 .art-menu-home:hover .cbd-logo {
   opacity: 0.78;
 }
-.art-menu-social {
+.art-menu-nav {
   display: flex;
+  align-items: center;
   gap: 0.6rem;
+}
+/* Text pills (Home, Resume) — home-page button style, in the portfolio red. */
+.art-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.5rem;
+  padding: 0 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid var(--art-blue);
+  background-color: var(--art-blue);
+  color: #fff;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease-out,
+    border-color 0.25s ease-out;
+}
+.art-pill:hover {
+  background-color: color-mix(in srgb, var(--art-blue) 84%, #000);
+  border-color: color-mix(in srgb, var(--art-blue) 84%, #000);
+}
+.art-pill-arrow {
+  font-size: 0.82em; /* shorter arrow, matching the home-page pills */
+  transition: transform 0.25s ease-out;
+}
+.art-pill:hover .art-pill-arrow {
+  transform: translate(1px, -1px);
 }
 .art-icon {
   display: inline-flex;
@@ -364,18 +414,18 @@ body {
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--art-blue) 40%, transparent);
-  color: var(--art-blue);
+  /* Filled red circle; the icon glyph reads as the light/"clear" part. */
+  border: 1px solid var(--art-blue);
+  background-color: var(--art-blue);
+  color: #fff;
   text-decoration: none;
   transition:
     background-color 0.25s ease-out,
-    color 0.25s ease-out,
     border-color 0.25s ease-out;
 }
 .art-icon:hover {
-  background-color: var(--art-blue);
-  border-color: var(--art-blue);
-  color: #fff;
+  background-color: color-mix(in srgb, var(--art-blue) 84%, #000);
+  border-color: color-mix(in srgb, var(--art-blue) 84%, #000);
 }
 .art-icon-svg {
   height: 1.25rem;
@@ -385,27 +435,44 @@ body {
 .art-masthead {
   position: relative;
   z-index: 5; /* sits above the first image so the title overlaps it */
-  padding: 4.5rem 0 0;
+  padding: 7.5rem 0 0; /* leaves room for the menu bar; keeps the title in place */
   text-align: center;
 }
-/* CAMILLE DEVANEY — centered at the very top, all caps, display font. */
-.art-name {
-  margin: 0 0 1.6rem;
+/* CAMILLE DEVANEY SELECTED WORKS — centered on the menu line, between the logo
+   and the icons, forming the top menu bar. */
+.art-menu-name {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
   font-family: var(--font-torsos);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+  font-size: clamp(0.95rem, 1.7vw, 1.35rem);
   color: var(--art-ink);
-  transform: translateY(var(--text-drop, 0px));
+  white-space: nowrap;
+  pointer-events: none;
 }
 /* VISUAL ART PORTFOLIO — one line, spanning the screen minus ~1in each side.
    Rendered as SVG text so it always fills the width regardless of the font. */
 /* One line, natural letter spacing, sized so the text itself fills the width
    (the divisor ≈ the title's width in ems, so it scales to ~100vw - 2in). */
-.art-h1 {
-  margin: 0 auto;
+/* Wrapper: pinned + centered, with perspective for the 3D slide animations. */
+.art-h1-wrap {
+  position: fixed;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
   width: calc(100vw - 2in);
+  perspective: 2000px;
+}
+.art-h1 {
+  margin: 0;
+  width: 100%;
   white-space: nowrap;
   text-align: center;
   font-family: var(--font-torsos);
@@ -414,7 +481,41 @@ body {
   letter-spacing: normal;
   font-size: var(--title-h);
   color: var(--art-blue);
-  transform: translateY(var(--text-drop, 0px));
+  /* Entrance: slide-in-bck-center (Animista). No drop-shadow, so the red stays
+     as vivid as the matching #db1a1f icons. */
+  animation: slide-in-bck-center 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+/* Exit: slide-out-bck-top, toggled by JS when scrolling off piece 1. */
+.art-h1.is-out {
+  animation: slide-out-bck-top 0.7s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes slide-in-bck-center {
+  0% {
+    transform: translateZ(600px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out-bck-top {
+  0% {
+    transform: translateZ(0) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(-700px) translateY(-500px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-h1,
+  .art-h1.is-out {
+    animation: none;
+  }
 }
 .art-intro {
   margin: 2rem auto 0;
@@ -425,40 +526,33 @@ body {
   color: #3a5560;
 }
 
-/* The stack of pieces — each piece is an image beside its caption, with the
-   image/caption sides alternating down the page. */
-.art-pieces {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(3rem, 9vh, 7.5rem);
-  padding-top: 0;
-}
-
-/* First piece is pulled up under the masthead so the title overlaps its top
-   third, with the name resting just above the image. --overlap is the extra
-   pull beyond the title height (bigger = title lower on the photo + name closer
-   to the image's top edge). Keep it under ~1.3rem so the name doesn't touch. */
-.art-pieces > .art-piece:first-child {
-  --overlap: 1.35rem;
-  margin-top: calc(-1 * (var(--title-h) + var(--overlap)));
-  position: relative;
+/* Static stage — fills the area below the header. Every slide is stacked in the
+   same spot; only the active one shows, crossfading between them as you scroll. */
+.art-stage {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: var(--stage-bottom); /* 60px header on top, 46px gap below */
   z-index: 1;
 }
-/* First piece's caption sits at the bottom of the image (not centered), since
-   the title overlaps the top. */
-.art-pieces > .art-piece:first-child .art-cap {
-  align-self: end;
-  padding-bottom: 2.5rem;
-}
-.art-piece {
+.art-slide {
+  position: absolute;
+  inset: 0;
   margin: 0;
-  /* Three columns: the image always sits in the centered middle column, with
-     the caption in the left or right column — so the image stays dead-center
-     no matter which side the text is on. */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  align-items: center; /* image stays centered (static) in the stage */
   gap: clamp(1.5rem, 4vw, 4.5rem);
+  pointer-events: none;
+}
+.art-slide.is-active {
+  pointer-events: auto;
+}
+
+/* Scroll track — invisible; just provides the scroll distance. */
+.art-track {
+  pointer-events: none;
 }
 
 /* Image — sized to fully fit on screen. Two-sided pieces fade to the "back"
@@ -466,14 +560,23 @@ body {
 .art-figwrap {
   grid-column: 2;
   grid-row: 1;
+  align-self: center; /* centered in the symmetric stage */
   position: relative;
   line-height: 0;
+  opacity: 0; /* image crossfades between paintings */
+  transition: opacity 0.7s ease;
+  will-change: opacity;
+}
+.art-slide.is-active .art-figwrap {
+  opacity: 1;
 }
 .art-img {
   display: block;
   width: auto;
-  max-width: 48vw;
-  max-height: 70vh;
+  max-width: 57vw;
+  /* Fills the stage — tall paintings touch the header (60px) and leave the
+     46px gap below; total vertical margin unchanged, so the painting size holds. */
+  max-height: calc(100dvh - var(--header-h) - var(--stage-bottom));
   height: auto;
   border-radius: 4px;
   box-shadow: 0 30px 70px -30px rgba(8, 24, 40, 0.6);
@@ -498,7 +601,9 @@ body {
    image; the title is italic and blue. */
 .art-cap {
   grid-column: 3; /* caption to the right of the centered image… */
-  grid-row: 1; /* …kept on the image's row so it stays vertically centered */
+  grid-row: 1;
+  align-self: end; /* sit low — aligned with the bottom fourth of the painting */
+  margin-bottom: 9vh;
   justify-self: start; /* …hugging the image */
   max-width: 24rem;
   text-align: left;
@@ -506,8 +611,24 @@ body {
   font-weight: 700;
   font-size: clamp(1.05rem, 1.7vw, 1.45rem);
   line-height: 1.4;
+  /* Title + text slide in from / out to the bottom as one object. This resting
+     (hidden) state uses the EXIT easing — it's where a caption goes when it
+     leaves (slide-out-bottom). Shorter travel now that it sits near the bottom. */
+  transform: translateY(28vh);
+  opacity: 0;
+  transition:
+    transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53),
+    opacity 1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
 }
-.art-piece:nth-child(even) .art-cap {
+/* Active caption: in place, using the ENTRANCE easing (slide-in-bottom). */
+.art-slide.is-active .art-cap {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.art-slide:nth-child(even) .art-cap {
   grid-column: 1; /* …and on the left for alternating pieces */
   justify-self: end;
   text-align: right;
@@ -518,7 +639,7 @@ body {
   color: var(--art-blue);
 }
 .art-text {
-  font-weight: 400;
+  font-weight: 700;
   color: var(--art-ink);
 }
 
@@ -554,11 +675,13 @@ body {
 
 /* Tablet / phone: stack the image and caption instead of side-by-side. */
 @media (max-width: 768px) {
-  .art-piece,
-  .art-piece:nth-child(even) {
+  .art-slide,
+  .art-slide:nth-child(even) {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     gap: 1.25rem;
     justify-items: center;
+    align-content: center;
   }
   .art-figwrap {
     grid-column: 1;
@@ -566,12 +689,13 @@ body {
   }
   .art-img {
     max-width: 92vw;
-    max-height: 66vh;
+    max-height: 60vh;
   }
   .art-cap,
-  .art-piece:nth-child(even) .art-cap {
+  .art-slide:nth-child(even) .art-cap {
     grid-column: 1;
     grid-row: auto;
+    align-self: auto;
     justify-self: center;
     text-align: center;
     max-width: 34rem;
