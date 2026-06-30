@@ -48,3 +48,10 @@ next-env.d.ts
 
 # Source archive for the CBD logo (extracted into /public).
 /CBD.zip
+
+# Source archive for the UCM logo (extracted into /public).
+/UCM LOGO.zip
+
+# Originals dropped in by Camille; optimized copies live in /public.
+/CAMILLE DEVANEY MASTER RESUME.pdf
+/Experiment Hero Image.jpeg

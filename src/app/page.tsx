@@ -28,7 +28,7 @@ export default function Home() {
               {hero.eyebrow}
             </p>
             <h1
-              className="name-enter mt-6 font-editorial text-[clamp(2.9rem,11.5vw,7.25rem)] leading-[0.9] tracking-[-0.015em] text-sky-ink"
+              className="name-enter mt-10 font-editorial text-[clamp(2.9rem,11.5vw,7.25rem)] leading-[0.9] tracking-[-0.015em] text-sky-ink"
               style={{ textShadow: "0 2px 22px rgba(16,46,78,0.30)" }}
             >
               <span className="name-line">{hero.nameLine1}</span>
@@ -38,11 +38,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Lower content over the ocean */}
-      <div className="relative z-10 flex flex-col lg:flex-1 lg:justify-end">
-        <div className={`${PAD} pt-10 pb-12 lg:pt-0 lg:pb-0`}>
-          <div className="flex max-w-xl flex-col gap-7 lg:pb-12">
-            <p className="enter enter-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sky-ink">
+      {/* Lower content over the ocean — anchored just under the horizon */}
+      <div className="relative z-10 flex flex-col lg:flex-1">
+        <div className={`${PAD} pt-10 pb-12 lg:pt-[56vh] lg:pb-0`}>
+          <div className="flex max-w-xl flex-col gap-7 lg:gap-8">
+            <p className="scrim-navy lg:w-fit enter enter-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sky-ink">
               {roles.map((role, i) => (
                 <Fragment key={role}>
                   {i > 0 && (
@@ -55,7 +55,7 @@ export default function Home() {
               ))}
             </p>
 
-            <p className="enter enter-4 text-[1.05rem] leading-relaxed text-sky-muted sm:text-[1.12rem]">
+            <p className="scrim-navy lg:w-fit enter enter-4 text-[1.05rem] leading-relaxed text-sky-muted sm:text-[1.12rem]">
               {intro}
             </p>
 
@@ -89,11 +89,28 @@ export default function Home() {
               </Link>
 
               <a
+                href={links.ucm}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="United Capital Markets"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
+              >
+                <span
+                  aria-hidden
+                  className="h-[1.85rem] w-[1.85rem] bg-current"
+                  style={{
+                    WebkitMask: "url(/ucm-logo.svg) center / contain no-repeat",
+                    mask: "url(/ucm-logo.svg) center / contain no-repeat",
+                  }}
+                />
+              </a>
+
+              <a
                 href={links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
                   <path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.04-3.34.72-4.04-1.6-4.04-1.6-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.02 2.9-.02 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.29C24 5.78 18.63.5 12 .5z" />
@@ -105,7 +122,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
                   <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
@@ -117,7 +134,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Book a meeting on Calendly"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-sky-ink transition-colors duration-300 hover:border-coral hover:text-coral"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
                   <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
@@ -127,12 +144,12 @@ export default function Home() {
           </div>
         </div>
 
-        <footer
-          className={`enter enter-6 ${PAD} flex flex-col gap-y-2.5 pb-8 pt-4 font-mono text-[0.6rem] uppercase tracking-[0.22em] text-sky-muted lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2`}
-        >
-          {footer.map((line) => (
-            <span key={line}>{line}</span>
-          ))}
+        <footer className={`enter enter-6 ${PAD} pb-8 pt-4 lg:mt-auto`}>
+          <div className="scrim-navy flex flex-col gap-y-2.5 font-mono text-[0.6rem] uppercase tracking-[0.22em] text-sky-muted lg:inline-flex lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2">
+            {footer.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </div>
         </footer>
       </div>
     </main>
