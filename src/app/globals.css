@@ -31,7 +31,7 @@ html {
 :root {
   /* Tuned so the page's waterline lands on the photo's horizon (~56.1%). */
   --horizon: 55.5%;
-  --water: #285471; /* the solid ocean below the horizon */
+  --water: #142944; /* deep navy — the dark part of the hero's waves */
 }
 
 body {
@@ -307,8 +307,8 @@ body {
   content: "";
   position: fixed;
   inset: 0;
-  background: url("/bg/tropical-wallpaper-hi.webp") center center / cover
-    no-repeat;
+  /* center top / cover, matching the menu bar so the two wallpapers line up. */
+  background: url("/bg/tropical-wallpaper-hi.webp") center top / cover no-repeat;
 }
 
 /* Bright-red scrollbar — scoped to the portfolio (the only page with .art). */
@@ -381,7 +381,7 @@ html:has(.art)::-webkit-scrollbar-thumb {
      seamless with the background and hides content scrolling underneath it. */
   background:
     linear-gradient(rgba(248, 252, 253, 0.55), rgba(248, 252, 253, 0.55)),
-    url("/bg/tropical-wallpaper.webp") center top / cover no-repeat fixed;
+    url("/bg/tropical-wallpaper-hi.webp") center top / cover no-repeat fixed;
 }
 .art-menu-home {
   display: inline-flex;
@@ -577,6 +577,15 @@ html:has(.art)::-webkit-scrollbar-thumb {
 .art-slide.is-active {
   pointer-events: auto;
 }
+/* Hand vertical touch gestures to the swipe handlers so paging is reliable on
+   phones — without this, iOS starts scrolling the gallery itself and ignores us. */
+.art-stage,
+.art-slide,
+.art-figwrap,
+.art-img,
+.art-cap {
+  touch-action: none;
+}
 
 /* Scroll track — invisible; just provides the scroll distance. */
 .art-track {
@@ -737,6 +746,18 @@ html:has(.art)::-webkit-scrollbar-thumb {
   .art-text {
     font-weight: 800;
   }
+  /* On phones, move the author line onto its own row below the bar so it
+     doesn't collide with the icons. */
+  .art-menu-name {
+    position: fixed;
+    top: calc(var(--header-h) + 0.35rem);
+    left: 0;
+    right: 0;
+    transform: translateY(0) scale(1); /* matches the slide+scale target so it can transition */
+    text-align: center;
+    font-size: 0.9rem;
+    z-index: 19;
+  }
 }
 
 /* On phones: big title that wraps to two lines ("VISUAL ART" / "PORTFOLIO").
@@ -744,12 +765,30 @@ html:has(.art)::-webkit-scrollbar-thumb {
    the break lands before the last word. */
 @media (max-width: 640px) {
   .art-h1-wrap {
+    top: 11%; /* below the menu + author line */
     width: calc(100vw - 1.5rem); /* override the desktop 2in side margins */
   }
   .art-h1 {
     width: 100%;
     white-space: normal;
-    font-size: 14vw;
+    font-size: 11.5vw; /* smaller, so the centered image has clear room above */
     line-height: 0.98;
+  }
+  /* Painting stays centered on the page (place-items:center from the 768px
+     rule). A smaller title keeps clear above it, so slides 2+ look balanced
+     instead of empty at the top. */
+  .art-img {
+    max-width: 86vw;
+    max-height: 52vh;
+  }
+  /* When you leave slide 1 and "VISUAL ART PORTFOLIO" slides away, drop the
+     author line down (slide-bottom easing) so it sits between the menu bar and
+     the top of the image — filling the space the title left behind. */
+  .art-menu-name {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .art:has(.art-h1.is-out) .art-menu-name {
+    /* slide down + scale-up-center (grows ~5px from 0.9rem, from its center) */
+    transform: translateY(7vh) scale(1.35);
   }
 }

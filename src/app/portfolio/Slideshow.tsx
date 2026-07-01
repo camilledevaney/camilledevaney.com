@@ -112,14 +112,41 @@ export default function Slideshow({ pieces }: { pieces: Piece[] }) {
       });
     };
 
+    // Touch (phones): swipe up/down = next/prev painting. The fixed full-screen
+    // stage makes native touch-scrolling unreliable, so we drive paging from the
+    // swipe itself and lock the page from scrolling underneath.
+    let touchY: number | null = null;
+    const onTouchStart = (e: TouchEvent) => {
+      touchY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      // Lock native scrolling from the FIRST move — iOS ignores preventDefault
+      // if it has already started scrolling. The swipe drives paging instead.
+      if (touchY !== null) e.preventDefault();
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchY === null) return;
+      const endY = e.changedTouches[0] ? e.changedTouches[0].clientY : touchY;
+      const dy = touchY - endY;
+      touchY = null;
+      if (Math.abs(dy) < 40) return; // ignore taps / tiny drags
+      go(dy > 0 ? 1 : -1); // swipe up => next painting
+    };
+
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKey);
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, [pieces.length]);
 
@@ -164,7 +191,7 @@ export default function Slideshow({ pieces }: { pieces: Piece[] }) {
           per painting) so the scrollbar reflects position. */}
       <div
         className="art-track"
-        style={{ height: `${pieces.length * 100}svh` }}
+        style={{ height: `${pieces.length * 100}vh` }}
         aria-hidden
       />
     </>

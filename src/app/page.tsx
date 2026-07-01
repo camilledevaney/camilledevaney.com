@@ -59,9 +59,11 @@ export default function Home() {
               {intro}
             </p>
 
-            <div className="enter enter-5 flex flex-wrap items-center gap-x-5 gap-y-4">
-              <a
-                href={links.resume}
+            <div className="enter enter-5 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-4">
+              {/* Resume + Portfolio pills — kept together on one row */}
+              <div className="flex items-center gap-4">
+                <a
+                  href={links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
@@ -87,7 +89,10 @@ export default function Home() {
                   ↗
                 </span>
               </Link>
+              </div>
 
+              {/* UCM, GitHub, LinkedIn, Calendly — icons on their own row */}
+              <div className="flex items-center gap-3">
               <a
                 href={links.ucm}
                 target="_blank"
@@ -140,6 +145,7 @@ export default function Home() {
                   <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
                 </svg>
               </a>
+              </div>
             </div>
           </div>
         </div>
