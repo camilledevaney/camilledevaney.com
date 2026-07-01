@@ -377,11 +377,11 @@ html:has(.art)::-webkit-scrollbar-thumb {
   justify-content: space-between;
   height: var(--header-h); /* exact bar height; content centered within */
   padding: 0 1.75rem;
-  /* Same wallpaper (+ veil) as the page, pinned to the viewport, so the bar is
-     seamless with the background and hides content scrolling underneath it. */
-  background:
-    linear-gradient(rgba(248, 252, 253, 0.55), rgba(248, 252, 253, 0.55)),
-    url("/bg/tropical-wallpaper-hi.webp") center top / cover no-repeat fixed;
+  /* Transparent: the page's fixed wallpaper (.art::before) + veil (.art-veil)
+     show straight through the bar, so it always matches the background — and we
+     avoid background-attachment:fixed, which iOS ignores. Nothing scrolls under
+     the bar (the fixed stage starts below it). */
+  background: transparent;
 }
 .art-menu-home {
   display: inline-flex;
@@ -765,13 +765,13 @@ html:has(.art)::-webkit-scrollbar-thumb {
    the break lands before the last word. */
 @media (max-width: 640px) {
   .art-h1-wrap {
-    top: 11%; /* below the menu + author line */
+    top: 13.5%; /* clear below the menu + author line */
     width: calc(100vw - 1.5rem); /* override the desktop 2in side margins */
   }
   .art-h1 {
     width: 100%;
     white-space: normal;
-    font-size: 11.5vw; /* smaller, so the centered image has clear room above */
+    font-size: 9.5vw; /* smaller — clears the author above and the image below */
     line-height: 0.98;
   }
   /* Painting stays centered on the page (place-items:center from the 768px
@@ -788,7 +788,8 @@ html:has(.art)::-webkit-scrollbar-thumb {
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .art:has(.art-h1.is-out) .art-menu-name {
-    /* slide down + scale-up-center (grows ~5px from 0.9rem, from its center) */
-    transform: translateY(7vh) scale(1.35);
+    /* slide down + a gentle scale-up from center (kept small so the long line
+       doesn't run off the sides of a phone). */
+    transform: translateY(7vh) scale(1.1);
   }
 }
