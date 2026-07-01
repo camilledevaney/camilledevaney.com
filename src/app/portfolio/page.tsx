@@ -7,7 +7,6 @@
 // NOTE: the display font is var(--font-torsos). Until the real "BB Torsos Pro"
 // file is added, it falls back to a stand-in (see globals.css / layout.tsx).
 
-import type { Viewport } from "next";
 import Link from "next/link";
 import content from "@/content.json";
 import PinnedTitle from "./PinnedTitle";
@@ -15,12 +14,6 @@ import Slideshow from "./Slideshow";
 
 export const metadata = {
   title: "Visual Art Portfolio — Camille Devaney",
-};
-
-// Let the page (and the fixed tropical wallpaper) extend edge-to-edge under the
-// iOS Safari UI, instead of Safari filling those areas with a flat gray.
-export const viewport: Viewport = {
-  viewportFit: "cover",
 };
 
 type Piece = { img: string; back?: string; title: string; text: string };

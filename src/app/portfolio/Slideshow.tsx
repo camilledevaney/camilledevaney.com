@@ -179,7 +179,9 @@ export default function Slideshow({ pieces }: { pieces: Piece[] }) {
                 />
               ) : null}
             </div>
-            <figcaption className="art-cap">
+            <figcaption
+              className={`art-cap${p.title.length > 70 ? " is-long" : ""}`}
+            >
               <span className="art-title">{withComma(p.title)}</span>{" "}
               <span className="art-text">{p.text}</span>
             </figcaption>
