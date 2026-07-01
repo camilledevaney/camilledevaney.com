@@ -17,11 +17,12 @@ export const metadata = {
   title: "Visual Art Portfolio — Camille Devaney",
 };
 
-// Tint the iOS Safari top/bottom bars the same blue as the home page, so they
-// read "clear" (a color that belongs to the site) instead of the muted/veiled
-// gray Safari would otherwise sample from the tropical wallpaper's edges.
+// Make the fixed wallpaper flow UNDER the iOS Safari bars (viewport-fit: cover)
+// so there's no hard edge at the bar — and tint the bar the wallpaper's own top
+// tone (#dae9ef) so, solid or glassy, it matches and the seam disappears.
 export const viewport: Viewport = {
-  themeColor: "#2471ba",
+  viewportFit: "cover",
+  themeColor: "#dae9ef",
 };
 
 type Piece = { img: string; back?: string; title: string; text: string };

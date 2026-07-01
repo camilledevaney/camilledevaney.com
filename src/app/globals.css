@@ -316,8 +316,8 @@ body {
   position: relative;
   min-height: 100dvh;
   overflow-x: clip;
-  background-color: #2471ba; /* site blue behind/around the wallpaper (matches
-                                the iOS bar theme-color; no gray to sample) */
+  background-color: #dae9ef; /* the wallpaper's own light top tone (matches the
+                                iOS bar theme-color so the seam disappears) */
   font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
   color: var(--art-ink);
 }
@@ -794,7 +794,8 @@ html:has(.art)::-webkit-scrollbar-thumb {
    the break lands before the last word. */
 @media (max-width: 640px) {
   .art-h1-wrap {
-    top: 13.5%; /* clear below the menu + author line */
+    /* centered in the gap between the author line and the top of the image */
+    top: 15%;
     width: calc(100vw - 1.5rem); /* override the desktop 2in side margins */
   }
   .art-h1 {
@@ -803,12 +804,16 @@ html:has(.art)::-webkit-scrollbar-thumb {
     font-size: 8vw; /* smaller — clears the author above and the image below */
     line-height: 0.98;
   }
-  /* Painting stays centered on the page (place-items:center from the 768px
-     rule). A smaller title keeps clear above it, so slides 2+ look balanced
-     instead of empty at the top. */
+  /* Anchor the painting's TOP at a fixed spot (below the title) and let it grow
+     down, so it can be much bigger while staying horizontally centered. */
+  .art-slide,
+  .art-slide:nth-child(even) {
+    place-items: start center;
+    padding-top: 17vh; /* image top lands where the centered one used to */
+  }
   .art-img {
-    max-width: 86vw;
-    max-height: 52vh;
+    max-width: 94vw;
+    max-height: 58vh; /* much bigger; capped so the bottom clears the caption */
   }
   /* When you leave slide 1 and "VISUAL ART PORTFOLIO" slides away, drop the
      author line down (slide-bottom easing) so it sits between the menu bar and
