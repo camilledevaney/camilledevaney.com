@@ -803,9 +803,9 @@ html:has(.art)::-webkit-scrollbar-thumb {
     font-size: 8vw; /* smaller — clears the author above and the image below */
     line-height: 0.98;
   }
-  /* Top-anchored column: the image sits just under the title, and the caption
-     flows DIRECTLY below the image — so the caption can never overlap the
-     painting, and the image can be big. */
+  /* Top-anchored column: the image sits just under the title; the caption is
+     centered in the space BELOW the image and ABOVE the bottom Safari bar (kept
+     clear of it via safe-area padding). Caption can never overlap the image. */
   .art-slide,
   .art-slide:nth-child(even) {
     display: flex;
@@ -813,22 +813,22 @@ html:has(.art)::-webkit-scrollbar-thumb {
     align-items: center;
     justify-content: flex-start;
     padding-top: 15vh; /* image lands just beneath VISUAL ART PORTFOLIO */
-    gap: 1.4vh;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh); /* clear the bottom bar */
   }
   .art-figwrap {
     flex: 0 0 auto;
   }
   .art-img {
     max-width: 94vw;
-    max-height: 58vh; /* much bigger */
+    max-height: 55vh;
   }
   .art-cap,
   .art-slide:nth-child(even) .art-cap {
-    position: static; /* in flow, directly under the image (never overlaps it) */
-    margin: 0;
+    position: static;
+    margin: auto 0; /* centered in the gap between the image and the bottom bar */
     text-align: center;
     max-width: 94vw;
-    font-size: 0.92rem; /* a touch smaller so it fits neatly under the image */
+    font-size: 0.92rem;
   }
   /* When you leave slide 1 and "VISUAL ART PORTFOLIO" slides away, drop the
      author line down (slide-bottom easing) so it sits between the menu bar and

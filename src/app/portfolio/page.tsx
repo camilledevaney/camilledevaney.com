@@ -17,11 +17,12 @@ export const metadata = {
   title: "Visual Art Portfolio — Camille Devaney",
 };
 
-// iOS draws the bars SOLID on this (non-scrolling) page, so the only real lever
-// is their color: tint them the wallpaper's own top tone so they match. (No
-// viewport-fit:cover — it only shoved content under the bottom bar without
-// helping, since a solid bar shows nothing behind it.)
+// viewport-fit:cover lets the fixed wallpaper extend PAST the screen edges,
+// behind the Safari bars, so the top bar shows the wallpaper (#dae9ef) and reads
+// as invisible. theme-color matches it as a fallback for the solid bottom bar.
+// (The caption is kept above the bottom bar via safe-area padding in globals.css.)
 export const viewport: Viewport = {
+  viewportFit: "cover",
   themeColor: "#dae9ef",
 };
 
