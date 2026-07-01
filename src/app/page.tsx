@@ -5,7 +5,6 @@
 // sky, and on load the scene pulls focus while the type flips and rises in.
 
 import { Fragment, type CSSProperties } from "react";
-import Link from "next/link";
 import content from "@/content.json";
 
 const PAD = "mx-auto w-full max-w-[90rem] px-6 sm:px-10 lg:px-16";
@@ -77,7 +76,10 @@ export default function Home() {
                 </span>
               </a>
 
-              <Link
+              {/* Plain <a> (full page load, not client-side) so the portfolio's
+                  theme-color is applied on the FIRST visit — iOS doesn't pick up a
+                  per-route theme-color on a client-side navigation. */}
+              <a
                 href={links.portfolio}
                 className="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink shadow-[0_18px_40px_-20px_rgba(8,24,40,0.75)] transition-colors duration-300 hover:bg-coral hover:text-paper"
               >
@@ -88,7 +90,7 @@ export default function Home() {
                 >
                   ↗
                 </span>
-              </Link>
+              </a>
               </div>
 
               {/* UCM, GitHub, LinkedIn, Calendly — icons on their own row */}

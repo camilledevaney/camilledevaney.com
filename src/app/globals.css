@@ -794,8 +794,7 @@ html:has(.art)::-webkit-scrollbar-thumb {
    the break lands before the last word. */
 @media (max-width: 640px) {
   .art-h1-wrap {
-    /* centered in the gap between the author line and the top of the image */
-    top: 15%;
+    top: 15%; /* just above the image (author line sits above this) */
     width: calc(100vw - 1.5rem); /* override the desktop 2in side margins */
   }
   .art-h1 {
@@ -804,16 +803,32 @@ html:has(.art)::-webkit-scrollbar-thumb {
     font-size: 8vw; /* smaller — clears the author above and the image below */
     line-height: 0.98;
   }
-  /* Anchor the painting's TOP at a fixed spot (below the title) and let it grow
-     down, so it can be much bigger while staying horizontally centered. */
+  /* Top-anchored column: the image sits just under the title, and the caption
+     flows DIRECTLY below the image — so the caption can never overlap the
+     painting, and the image can be big. */
   .art-slide,
   .art-slide:nth-child(even) {
-    place-items: start center;
-    padding-top: 17vh; /* image top lands where the centered one used to */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 15vh; /* image lands just beneath VISUAL ART PORTFOLIO */
+    gap: 1.4vh;
+  }
+  .art-figwrap {
+    flex: 0 0 auto;
   }
   .art-img {
     max-width: 94vw;
-    max-height: 58vh; /* much bigger; capped so the bottom clears the caption */
+    max-height: 58vh; /* much bigger */
+  }
+  .art-cap,
+  .art-slide:nth-child(even) .art-cap {
+    position: static; /* in flow, directly under the image (never overlaps it) */
+    margin: 0;
+    text-align: center;
+    max-width: 94vw;
+    font-size: 0.92rem; /* a touch smaller so it fits neatly under the image */
   }
   /* When you leave slide 1 and "VISUAL ART PORTFOLIO" slides away, drop the
      author line down (slide-bottom easing) so it sits between the menu bar and
