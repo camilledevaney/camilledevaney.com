@@ -12,6 +12,11 @@
   --font-mono: var(--font-plex-mono);
   --font-editorial: var(--font-editorial);
 
+  /* Home page keeps its wide "landscape hero" layout much longer as the window
+     narrows — only flipping to the stacked mobile layout below 560px (~a
+     quarter screen) instead of the usual 1024px. Only page.tsx uses `lg:`. */
+  --breakpoint-lg: 560px;
+
   --color-paper: #f3ecdd;
   --color-paper-2: #f8f2e6;
   --color-ink: #211d16;
@@ -31,7 +36,7 @@ html {
 :root {
   /* Tuned so the page's waterline lands on the photo's horizon (~56.1%). */
   --horizon: 55.5%;
-  --water: #142944; /* deep navy — the dark part of the hero's waves */
+  --water: #2471ba; /* sky blue */
 }
 
 body {
@@ -59,6 +64,22 @@ body {
   );
   background-repeat: no-repeat;
   background-size: 100% 100%;
+}
+
+/* Knockout icon: a cream disc with the glyph punched clean THROUGH it, so the
+   page behind shows through the glyph shape ("white and clear"). The parent <a>
+   is transparent + rounded-full + overflow-hidden, which clips this to a circle
+   and (on hover) tints the see-through glyph. Per-icon glyph via --glyph. */
+.ic-knockout {
+  background: var(--color-paper);
+  -webkit-mask:
+    linear-gradient(#000 0 0),
+    var(--glyph) center / var(--glyph-size, 46%) no-repeat;
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0),
+    var(--glyph) center / var(--glyph-size, 46%) no-repeat;
+  mask-composite: exclude;
 }
 
 /* ---------------------------------------------------------------------------
@@ -97,11 +118,12 @@ body {
   pointer-events: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 560px) {
   body {
     /* Full-bleed landscape hero photo; the text + elements overlay it in their
-       existing positions. */
-    background: url("/hero-landscape.jpg") center center / cover no-repeat;
+       existing positions. Focus sits on Camille (right of frame) so she stays
+       in view as the window narrows toward the mobile breakpoint. */
+    background: url("/hero-landscape.jpg") 70% center / cover no-repeat;
   }
   .hero-media {
     display: contents;
@@ -251,7 +273,7 @@ body {
 
 /* Mobile: the photo carries the visible horizon, so the page is sky only behind
    the top of the photo and solid ocean everywhere below. */
-@media (max-width: 1023.98px) {
+@media (max-width: 559.98px) {
   :root {
     --horizon: 13%;
   }
@@ -713,15 +735,18 @@ html:has(.art)::-webkit-scrollbar-thumb {
 /* Tablet / phone: center the painting in the stage; the caption floats,
    centered, along the bottom. */
 @media (max-width: 768px) {
+  /* Stack image + caption as a centered column so the caption is always BELOW
+     the image — long titles (e.g. King Julien) can't ride up over the image. */
   .art-slide,
   .art-slide:nth-child(even) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    place-items: center; /* painting centered on both axes */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
   .art-figwrap {
-    grid-column: 1;
-    grid-row: 1;
+    flex: 0 0 auto;
   }
   .art-img {
     max-width: 90vw;
@@ -729,17 +754,12 @@ html:has(.art)::-webkit-scrollbar-thumb {
   }
   .art-cap,
   .art-slide:nth-child(even) .art-cap {
-    position: absolute; /* out of the grid so the image truly centers */
-    left: 1rem;
-    right: 1rem;
-    bottom: 3.5vh;
-    grid-column: auto;
-    grid-row: auto;
+    position: static; /* in flow, directly under the image */
     margin: 0;
-    align-self: auto;
+    align-self: center;
     justify-self: auto;
     text-align: center;
-    max-width: none;
+    max-width: 90vw;
   }
   /* Caption a touch bolder on phones. */
   .art-title,
