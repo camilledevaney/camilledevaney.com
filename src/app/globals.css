@@ -294,10 +294,38 @@ body {
   position: relative;
   min-height: 100dvh;
   overflow-x: clip;
-  background: url("/bg/tropical-wallpaper.webp") center top / cover no-repeat
-    fixed;
+  background-color: #cfe1e6; /* tint shown behind/around the wallpaper */
   font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
   color: var(--art-ink);
+}
+
+/* Wallpaper as a FIXED LAYER. position:fixed works on mobile browsers, whereas
+   background-attachment: fixed is silently ignored on iOS/Android — which is
+   why the wallpaper wasn't showing on real phones. A hi-res source keeps it
+   crisp on retina. Painted below the veil and all content. */
+.art::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/bg/tropical-wallpaper-hi.webp") center center / cover
+    no-repeat;
+}
+
+/* Bright-red scrollbar — scoped to the portfolio (the only page with .art). */
+html:has(.art) {
+  scrollbar-color: #db1a1f transparent; /* Firefox / standard */
+}
+html:has(.art)::-webkit-scrollbar {
+  width: 12px;
+}
+html:has(.art)::-webkit-scrollbar-track {
+  background: transparent;
+}
+html:has(.art)::-webkit-scrollbar-thumb {
+  background-color: #db1a1f;
+  border-radius: 999px;
+  border: 3px solid transparent; /* insets the thumb for a rounded pill */
+  background-clip: padding-box;
 }
 
 /* Soft veil so text stays readable over the busy wallpaper (wallpaper still
@@ -673,42 +701,55 @@ body {
   }
 }
 
-/* Tablet / phone: stack the image and caption instead of side-by-side. */
+/* Tablet / phone: center the painting in the stage; the caption floats,
+   centered, along the bottom. */
 @media (max-width: 768px) {
   .art-slide,
   .art-slide:nth-child(even) {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 1.25rem;
-    justify-items: center;
-    align-content: center;
+    grid-template-rows: 1fr;
+    place-items: center; /* painting centered on both axes */
   }
   .art-figwrap {
     grid-column: 1;
-    grid-row: auto;
+    grid-row: 1;
   }
   .art-img {
-    max-width: 92vw;
-    max-height: 60vh;
+    max-width: 90vw;
+    max-height: 66vh;
   }
   .art-cap,
   .art-slide:nth-child(even) .art-cap {
-    grid-column: 1;
+    position: absolute; /* out of the grid so the image truly centers */
+    left: 1rem;
+    right: 1rem;
+    bottom: 3.5vh;
+    grid-column: auto;
     grid-row: auto;
+    margin: 0;
     align-self: auto;
-    justify-self: center;
+    justify-self: auto;
     text-align: center;
-    max-width: 34rem;
+    max-width: none;
+  }
+  /* Caption a touch bolder on phones. */
+  .art-title,
+  .art-text {
+    font-weight: 800;
   }
 }
 
-/* On phones a 1-inch margin each side is too much — use small margins there. */
+/* On phones: big title that wraps to two lines ("VISUAL ART" / "PORTFOLIO").
+   The non-breaking space (added in PinnedTitle) keeps "VISUAL ART" together so
+   the break lands before the last word. */
 @media (max-width: 640px) {
-  .art {
-    --title-h: calc((100vw - 2rem) / 12.9);
+  .art-h1-wrap {
+    width: calc(100vw - 1.5rem); /* override the desktop 2in side margins */
   }
   .art-h1 {
-    width: calc(100vw - 2rem);
-    font-size: var(--title-h);
+    width: 100%;
+    white-space: normal;
+    font-size: 14vw;
+    line-height: 0.98;
   }
 }

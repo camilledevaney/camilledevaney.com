@@ -55,3 +55,7 @@ next-env.d.ts
 # Originals dropped in by Camille; optimized copies live in /public.
 /CAMILLE DEVANEY MASTER RESUME.pdf
 /Experiment Hero Image.jpeg
+
+# Source favicon set (installed into src/app).
+/CBD FAVICON/
+/CBD FAVICON.zip
