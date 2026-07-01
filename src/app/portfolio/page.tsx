@@ -17,11 +17,11 @@ export const metadata = {
   title: "Visual Art Portfolio — Camille Devaney",
 };
 
-// Make the fixed wallpaper flow UNDER the iOS Safari bars (viewport-fit: cover)
-// so there's no hard edge at the bar — and tint the bar the wallpaper's own top
-// tone (#dae9ef) so, solid or glassy, it matches and the seam disappears.
+// iOS draws the bars SOLID on this (non-scrolling) page, so the only real lever
+// is their color: tint them the wallpaper's own top tone so they match. (No
+// viewport-fit:cover — it only shoved content under the bottom bar without
+// helping, since a solid bar shows nothing behind it.)
 export const viewport: Viewport = {
-  viewportFit: "cover",
   themeColor: "#dae9ef",
 };
 
