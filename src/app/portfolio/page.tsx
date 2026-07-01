@@ -10,6 +10,7 @@
 import type { Viewport } from "next";
 import Link from "next/link";
 import content from "@/content.json";
+import ForceThemeColor from "./ForceThemeColor";
 import PinnedTitle from "./PinnedTitle";
 import Slideshow from "./Slideshow";
 
@@ -38,6 +39,7 @@ export default function Portfolio() {
 
   return (
     <main className="art">
+      <ForceThemeColor />
       <div className="art-veil" aria-hidden />
 
       {/* Top menu: home (logo) on the left, socials on the right — all in red. */}
