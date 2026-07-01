@@ -7,6 +7,7 @@
 // NOTE: the display font is var(--font-torsos). Until the real "BB Torsos Pro"
 // file is added, it falls back to a stand-in (see globals.css / layout.tsx).
 
+import type { Viewport } from "next";
 import Link from "next/link";
 import content from "@/content.json";
 import PinnedTitle from "./PinnedTitle";
@@ -14,6 +15,13 @@ import Slideshow from "./Slideshow";
 
 export const metadata = {
   title: "Visual Art Portfolio — Camille Devaney",
+};
+
+// Tint the iOS Safari top/bottom bars the same blue as the home page, so they
+// read "clear" (a color that belongs to the site) instead of the muted/veiled
+// gray Safari would otherwise sample from the tropical wallpaper's edges.
+export const viewport: Viewport = {
+  themeColor: "#2471ba",
 };
 
 type Piece = { img: string; back?: string; title: string; text: string };
