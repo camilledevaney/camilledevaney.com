@@ -735,18 +735,15 @@ html:has(.art)::-webkit-scrollbar-thumb {
 /* Tablet / phone: center the painting in the stage; the caption floats,
    centered, along the bottom. */
 @media (max-width: 768px) {
-  /* Stack image + caption as a centered column so the caption is always BELOW
-     the image — long titles (e.g. King Julien) can't ride up over the image. */
   .art-slide,
   .art-slide:nth-child(even) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    place-items: center; /* painting centered on both axes */
   }
   .art-figwrap {
-    flex: 0 0 auto;
+    grid-column: 1;
+    grid-row: 1;
   }
   .art-img {
     max-width: 90vw;
@@ -754,12 +751,23 @@ html:has(.art)::-webkit-scrollbar-thumb {
   }
   .art-cap,
   .art-slide:nth-child(even) .art-cap {
-    position: static; /* in flow, directly under the image */
+    position: absolute; /* out of the grid so the image truly centers */
+    left: 1rem;
+    right: 1rem;
+    bottom: 3.5vh;
+    grid-column: auto;
+    grid-row: auto;
     margin: 0;
-    align-self: center;
+    align-self: auto;
     justify-self: auto;
     text-align: center;
-    max-width: 90vw;
+    max-width: none;
+  }
+  /* One very long title (King Julien) would otherwise wrap to many lines and
+     ride up over the image — shrink just that caption so it stays compact and
+     clears the painting. Flagged with .is-long in Slideshow. */
+  .art-cap.is-long {
+    font-size: 0.72rem;
   }
   /* Caption a touch bolder on phones. */
   .art-title,
